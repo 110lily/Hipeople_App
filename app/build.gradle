@@ -3,6 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 }
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.example.datingappkotlinproject'
     compileSdk 33
@@ -14,6 +18,8 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "server_key", properties['server_key']
     }
     buildTypes {
         release {
@@ -38,6 +44,7 @@ android {
     dataBinding {
         enabled = true
     }
+
 }
 dependencies {
 
