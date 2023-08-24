@@ -54,14 +54,10 @@ class ChatRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
-
-
         // 입력값이 공백일때 데이터가 전송되지 않게 콜백 함수를 이용하여 전송 버튼 막기
         binding.edtMessage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString() != null && s.toString() != "") {
                     binding.btnSubmit.isEnabled = true
@@ -77,8 +73,6 @@ class ChatRoomActivity : AppCompatActivity() {
         initializeView()
         initializeListener()
         setupChatRooms()
-
-
     }
 
     private fun initializeProperty() {

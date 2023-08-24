@@ -1,6 +1,5 @@
 package com.example.datingappkotlinproject.onefragment
 
-import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +15,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -69,6 +67,7 @@ class OneFragment : Fragment() {
         cardStackView?.adapter = cardStackAdapter
         // 이성만을 추천하기 위하여 현재 접속한 user의 성별 얻기
         getUserGender()
+
     }
 
     // 이성만을 추천하기 위하여 현재 접속한 user의 성별 얻기 함수

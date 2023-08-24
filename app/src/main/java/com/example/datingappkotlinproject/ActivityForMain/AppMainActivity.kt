@@ -9,24 +9,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.datingappkotlinproject.*
-import com.example.datingappkotlinproject.ActivityForRegister.MainActivity
 import com.example.datingappkotlinproject.chat.ChatFragment
 import com.example.datingappkotlinproject.community.CommunityFragment
 import com.example.datingappkotlinproject.databinding.ActivityAppMainBinding
 import com.example.datingappkotlinproject.databinding.UsertabButtonBinding
+import com.example.datingappkotlinproject.likePeople.likePeople_Activity
 import com.example.datingappkotlinproject.onefragment.OneFragment
 import com.example.datingappkotlinproject.profile.ProfileActivity
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlin.math.log
 
 // 앱 실행 / 로그인 완료 후 진행되는 액티비티
 class AppMainActivity : AppCompatActivity() {
@@ -52,6 +51,7 @@ class AppMainActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (data in snapshot.children) {
                         userInfoData = data.getValue(UserInfoData::class.java)!!
+                        Log.e("ddddddddddddddddd", "$userInfoData")
                     }
                 }
 
@@ -69,7 +69,7 @@ class AppMainActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.setCustomView(tabCustomView(position))
         }.attach()
-        // ViewPager2에서 스와이프 동작이 비활성화
+        // ViewPager2에서 스와이프 동작이 비활성화s
         binding.viewPager2.isUserInputEnabled = false
     }
 
@@ -81,14 +81,25 @@ class AppMainActivity : AppCompatActivity() {
 
     // 프로필 설정 메뉴 연동
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_profile -> {
-                val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra("dataList", userInfoData)
-                startActivity(intent)
-                finish()
+
+            when (item.itemId) {
+
+                R.id.item_profile -> {
+                    Log.e("sgsdgsdgsdgsdgdgsd", "$userInfoData")
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("dataList", userInfoData)
+                    startActivity(intent)
+                    finish()
+                }
+                R.id.item_likePeople -> {
+                    val intent = Intent(this, likePeople_Activity::class.java)
+                    intent.putExtra("dataList", userInfoData)
+                    startActivity(intent)
+                    finish()
+                }
             }
-        }
+
+
         return super.onOptionsItemSelected(item)
     }
 

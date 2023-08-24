@@ -10,5 +10,6 @@ class FBRef {
         private val database = Firebase.database
 
         val userRef = database.getReference("User/users")
+        val likePeopleRef = database.getReference("likePeople")
     }
 }

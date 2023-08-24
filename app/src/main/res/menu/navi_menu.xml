@@ -7,4 +7,11 @@
         android:title="프로필"
         android:iconTint="@color/green"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_likePeople"
+        android:icon="@drawable/favorite_24"
+        android:title="프로필"
+        android:iconTint="#F44336"
+        app:showAsAction="always"/>
 </menu>
