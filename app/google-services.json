@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1006860953736:android:9b5e83530c9c56699e973d",
         "android_client_info": {
-          "package_name": "com.example.datingappkotlinproject"
+          "package_name": "com.myungwoo.datingappkotlinproject"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1006860953736-44r2r71noere21e4nfc3mir4p8arer0j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.datingappkotlinproject",
+            "package_name": "com.myungwoo.datingappkotlinproject",
             "certificate_hash": "4112ede5ed9155b0c98787c258b21e2fe8a27e77"
           }
         },
@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1006860953736:android:efda8a2f6681e1499e973d",
         "android_client_info": {
-          "package_name": "com.example.shoppingmall_app"
+          "package_name": "com.myungwoo.shoppingmall_app"
         }
       },
       "oauth_client": [

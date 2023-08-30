@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#데이터 클래스 난독화 풀기
+-keep class com.myungwoo.datingappkotlinproject.chat.**
+-keep class com.myungwoo.datingappkotlinproject.chat.** { *; }
+
+-keep class com.myungwoo.datingappkotlinproject.chat.fcm.**
+-keep class com.myungwoo.datingappkotlinproject.chat.fcm.** { *; }
+
+-keep class com.myungwoo.datingappkotlinproject.community.**
+-keep class com.myungwoo.datingappkotlinproject.community.** { *; }
+
+-keep class com.myungwoo.datingappkotlinproject.onefragment.**
+-keep class com.myungwoo.datingappkotlinproject.onefragment.** { *; }
+
+-keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.**
+-keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.** { *; }

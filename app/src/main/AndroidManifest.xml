@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" android:minSdkVersion="33" />
 
     <application
         android:allowBackup="false"
@@ -17,6 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DatingAppKotlinProject"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_name" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/btnnext" />
+
+
         <activity
             android:name=".likePeople.likePeople_Activity"
             android:exported="false" />
@@ -47,10 +57,10 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDSAk8NDyd_VhJPSTKythEeCG_m95rWYtw" />
+            android:value="${googleMap_Key_manifest}" />
 
         <activity
-            android:name=".ActivityForMain.AppMainActivity"
+            android:name="com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity"
             android:exported="false" />
         <activity
             android:name=".ActivityForRegister.EduActivity"
