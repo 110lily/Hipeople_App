@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
 import com.myungwoo.datingappkotlinproject.databinding.FragmentThreeBinding
 import com.google.android.gms.common.api.Status
@@ -40,24 +41,37 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import noman.googleplaces.*
 import java.io.IOException
 import java.util.*
 
 
+
 class RestFragment : Fragment(), OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
-    lateinit var binding: FragmentThreeBinding
-    var search_LATLNG = LatLng(0.0, 0.0)
+
+    private lateinit var binding: FragmentThreeBinding
+    private lateinit var appMainActivity: AppMainActivity
+    private val PERMISSIONS_REQUEST_CODE = 100
+
     private var mMap: GoogleMap? = null
     private var currentMarker: Marker? = null
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var locationRequest: LocationRequest? = null
+    private var location: Location? = null
+    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
+
+    var search_LATLNG = LatLng(0.0, 0.0)
     var needRequest = false
-    lateinit var appMainActivity: com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
     var previous_marker: MutableList<Marker>? = null
     var currentflag = 0
     var searchflag = 0
     var circle: Circle? = null
     var circle1KM: CircleOptions? = null
+
 
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     var REQUIRED_PERMISSIONS = arrayOf(
@@ -67,14 +81,10 @@ class RestFragment : Fragment(), OnMapReadyCallback,
     var mCurrentLocatiion: Location? = null
     var currentPosition: LatLng? = null
 
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var locationRequest: LocationRequest? = null
-    private var location: Location? = null
-    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        appMainActivity = context as com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+        appMainActivity = context as AppMainActivity
     }
 
     override fun onCreateView(
@@ -89,6 +99,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         )
         mLayout = binding.layoutMain
+
         //위치정보를 요청하는코드 2분마다 업데이트
         locationRequest = LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -106,13 +117,88 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         previous_marker = ArrayList()
 
         val btnRestaurant: Button = binding.btnRestaurant
-        btnRestaurant.setOnClickListener({ showRestInformation(currentPosition!!, search_LATLNG) })
+        btnRestaurant.setOnClickListener {
+            if (currentPosition != null && search_LATLNG != null) {
+                lifecycleScope.launch(Dispatchers.Default) {
+                    // 만약 showRestInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행
+                    withContext(Dispatchers.Main) {
+                        // UI 업데이트는 메인 스레드에서 수행
+                        showRestInformation(currentPosition!!, search_LATLNG)
+                    }
+                }
+            } else {
+                // 위치 정보가 없는 경우 처리
+                Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         val btnCafe: Button = binding.btnCafe
-        btnCafe.setOnClickListener({ showCafeInformation(currentPosition!!, search_LATLNG) })
-
+        btnCafe.setOnClickListener {
+            if (currentPosition != null && search_LATLNG != null) {
+                lifecycleScope.launch(Dispatchers.Default) {
+                    // 여기서 무거운 작업을 수행. 만약 showCafeInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행
+                    withContext(Dispatchers.Main) {
+                        // UI 업데이트는 메인 스레드에서 수행
+                        showCafeInformation(currentPosition!!, search_LATLNG)
+                    }
+                }
+            } else {
+                // 위치 정보가 없는 경우 처리
+                Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        checkPermission_request()
         return binding.root
     }
+
+    private fun checkPermission_request() {
+        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
+        ) {
+            // 권한이 이미 허용됨
+        } else {
+            // 권한 요청
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("위치 정보 요청")
+            builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
+            builder.setPositiveButton("동의") { dialog, which ->
+                requestLocationPermission()
+            }
+            builder.setNegativeButton("거부") { dialog, which ->
+                showToastMessage("위치 정보 권한이 거부되었습니다.")
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            PERMISSIONS_REQUEST_CODE
+        )
+    }
+
+    private fun showToastMessage(message: String) {
+        mLayout?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() }
+    }
+
+
+
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         Log.d(TAG, "onMapReady :")
@@ -628,4 +714,5 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             }
         }
     }
+
 }

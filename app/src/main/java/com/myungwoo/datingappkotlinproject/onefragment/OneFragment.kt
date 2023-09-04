@@ -24,7 +24,7 @@ import com.yuyakaido.android.cardstackview.Direction
 // 이성추천 Fragment
 class OneFragment : Fragment() {
     lateinit var binding: FragmentOneBinding
-    lateinit var mainActivity: com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+    lateinit var mainActivity: AppMainActivity
     lateinit var cardStackAdapter: CardStackAdapter
     lateinit var datalist: MutableList<UserInfoData>
     lateinit var manager: CardStackLayoutManager
@@ -83,7 +83,6 @@ class OneFragment : Fragment() {
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
             })
     }

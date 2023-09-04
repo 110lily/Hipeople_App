@@ -19,14 +19,14 @@ import com.google.firebase.database.ValueEventListener
 
 
 class CommunityFragment : Fragment() {
-    lateinit var mainActivity: com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+    lateinit var mainActivity: AppMainActivity
     lateinit var binding: FragmentCommunityBinding
     lateinit var postingData: MutableList<AnonyPostingData>
     lateinit var adapter: PictureAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainActivity = context as com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+        mainActivity = context as AppMainActivity
     }
 
     // Fragment의 생명주기를 이용하여 계속 새로운 값을 업데이트 하기
@@ -43,11 +43,13 @@ class CommunityFragment : Fragment() {
         binding = FragmentCommunityBinding.inflate(inflater)
         // 사진 게시판의 정보 얻기
         pictureDataLoading()
+
         // FloatButton을 이용하여 새로운 글 작성하기
         binding.floatingActionButton2.setOnClickListener {
             val intent = Intent(mainActivity.applicationContext, InputActivity::class.java)
             startActivity(intent)
         }
+
         // postingData MutableList 객체 생성
         postingData = mutableListOf()
         // Fragment와 리사이클러 뷰 어댑터 연결

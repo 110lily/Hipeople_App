@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
@@ -31,71 +32,88 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var spf: SharedPreferences
     private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
 
-    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
-    var REQUIRED_PERMISSIONS = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ) // 외부 저장소
-
-    // 구글맵 퍼미션 정의
-    companion object {
-        private val TAG = "googlemap_example"
-        private val GPS_ENABLE_REQUEST_CODE = 2001
-        private val UPDATE_INTERVAL_MS = 1000 // 1초
-        private val FASTEST_UPDATE_INTERVAL_MS = 500 // 0.5초
-        private val PERMISSIONS_REQUEST_CODE = 100
-    }
+//    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
+//    var REQUIRED_PERMISSIONS = arrayOf(
+//        Manifest.permission.ACCESS_FINE_LOCATION,
+//        Manifest.permission.ACCESS_COARSE_LOCATION
+//    ) // 외부 저장소
+//
+//    // 구글맵 퍼미션 정의
+//    companion object {
+//        private val TAG = "googlemap_example"
+//        private val GPS_ENABLE_REQUEST_CODE = 2001
+//        private val UPDATE_INTERVAL_MS = 1000 // 1초
+//        private val FASTEST_UPDATE_INTERVAL_MS = 500 // 0.5초
+//        private val PERMISSIONS_REQUEST_CODE = 100
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mLayout = binding.mainActivity
-        //런타임 퍼미션 처리
-        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
-        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
-        ) {
+//        mLayout = binding.mainActivity
+//
+//        // 위치 정보 권한 팝업을 띄우기 위한 코드
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("위치 정보 요청")
+//        builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
+//        builder.setPositiveButton("동의") { dialog, which ->
+//            requestLocationPermission()
+//        }
+//        builder.setNegativeButton("거부") { dialog, which ->
+//            showToastMessage("위치 정보 권한이 거부되었습니다.")
+//        }
+//        val dialog = builder.create()
+//        dialog.show()
 
-            // 2. 이미 퍼미션을 가지고 있다면
-            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
-        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
+        /** 예전 위치 코드 */
+//        //런타임 퍼미션 처리
+//        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
+//        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
+//            this,
+//            Manifest.permission.ACCESS_FINE_LOCATION
+//        )
+//        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
+//            this,
+//            Manifest.permission.ACCESS_COARSE_LOCATION
+//        )
+//        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+//            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
+//        ) {
+//
+//            // 2. 이미 퍼미션을 가지고 있다면
+//            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
+//        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
+//
+//            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                    this,
+//                    REQUIRED_PERMISSIONS[0]
+//                )
+//            ) {
+//
+//                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
+//                Snackbar.make(
+//                    mLayout!!, "주변 맛집,카페를 추천받기 위해서는 사용자의 위치 접근 권한이 필요합니다.",
+//                    Snackbar.LENGTH_INDEFINITE
+//                )
+//                    .setAction("확인") { // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+//                        ActivityCompat.requestPermissions(
+//                            this, REQUIRED_PERMISSIONS,
+//                            PERMISSIONS_REQUEST_CODE
+//                        )
+//                    }.show()
+//            } else {
+//                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
+//                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+//                ActivityCompat.requestPermissions(
+//                    this, REQUIRED_PERMISSIONS,
+//                    PERMISSIONS_REQUEST_CODE
+//                )
+//            }
+//        }
 
-            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    REQUIRED_PERMISSIONS[0]
-                )
-            ) {
-
-                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
-                Snackbar.make(
-                    mLayout!!, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.",
-                    Snackbar.LENGTH_INDEFINITE
-                )
-                    .setAction("확인") { // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions(
-                            this, REQUIRED_PERMISSIONS,
-                            PERMISSIONS_REQUEST_CODE
-                        )
-                    }.show()
-            } else {
-                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(
-                    this, REQUIRED_PERMISSIONS,
-                    PERMISSIONS_REQUEST_CODE
-                )
-            }
-        }
+        /** 예전 위치 코드 끝 */
 
         // 한번 로그인 후 자동로그인 기능을 위한 SharedPreference 정의
         // SharedPreference에 저장된 Boolean 값이 true 라면 자동 로그인 후 AppMainActivity로 이동
@@ -138,7 +156,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     binding.edtId.text.toString(),
                     binding.edtPassword.text.toString()
                 )
-                        // 성공시 콜백함수
+                    // 성공시 콜백함수
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
@@ -147,7 +165,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             val spfEdit = spf.edit()
                             spfEdit.putBoolean("isLogin", true)
                             spfEdit.apply()
-                            val intent = Intent(this, com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity::class.java)
+                            val intent = Intent(
+                                this,
+                                com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity::class.java
+                            )
                             startActivity(intent)
                             finish()
                         } else {
@@ -181,4 +202,54 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "아이디 또는 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
+
+//    // 위치 정보 권한 요청 로직 실행
+//    private fun requestLocationPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ContextCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            // 이미 퍼미션을 가지고 있는 경우 처리할 로직 작성
+//
+//        } else {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//                ),
+//                PERMISSIONS_REQUEST_CODE
+//            )
+//        }
+//    }
+//
+//// 거부 처리 로직 실행
+//
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//
+//        if (requestCode == PERMISSIONS_REQUEST_CODE) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // 퍼미션 동의 시 처리할 로직 작성
+//
+//            } else {
+//                showToastMessage("위치 정보 권한이 거부되었습니다.")
+//            }
+//        }
+//    }
+//
+//// 토스트 메시지 출력 함수
+//
+//    private fun showToastMessage(message: String) {
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//    }
 }
