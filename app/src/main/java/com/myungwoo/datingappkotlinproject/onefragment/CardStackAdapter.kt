@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -51,24 +52,38 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
 
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         val isLiked = pref.getBoolean("isLiked_${itemsData.uid}", false)
-        binding.btnLike.setImageResource(if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.favorite_pink)
+        updateLikeButtonState(binding.btnLike, isLiked)
 
-        // 버튼을 클릭할 때의 동작입니다.
+// 버튼을 클릭할 때의 동작입니다.
         binding.btnLike.setOnClickListener {
             val database = Firebase.database.reference.child("likePeople")
             val currentUserUid = Firebase.auth.currentUser!!.uid
 
             val newValue: Boolean = !isLiked // 새로운 값은 현재 값의 반대입니다.
 
-            database.child(currentUserUid).child("${itemsData.uid}")
-                .setValue(newValue)
-                .addOnSuccessListener {
-                    // SharedPreferences에 새로운 값을 저장합니다.
-                    pref.edit().putBoolean("isLiked_${itemsData.uid}", newValue).apply()
+            if (newValue) {
+                // 좋아요 추가
+                database.child(currentUserUid).child(itemsData.uid!!)
+                    .setValue(true)
+                    .addOnSuccessListener {
+                        // SharedPreferences에 새로운 값을 저장합니다.
+                        pref.edit().putBoolean("isLiked_${itemsData.uid}", true).apply()
 
-                    // 버튼 이미지를 업데이트합니다.
-                    binding.btnLike.setImageResource(if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.favorite_pink)
-                }
+                        // 버튼 이미지를 업데이트합니다.
+                        updateLikeButtonState(binding.btnLike, true)
+                    }
+            } else {
+                // 좋아요 취소
+                database.child(currentUserUid).child(itemsData.uid!!)
+                    .removeValue()
+                    .addOnSuccessListener {
+                        // SharedPreferences에서 값을 제거합니다.
+                        pref.edit().remove("isLiked_${itemsData.uid}").apply()
+
+                        // 버튼 이미지를 업데이트합니다.
+                        updateLikeButtonState(binding.btnLike, false)
+                    }
+            }
         }
 
         // 채팅하기 버튼 누를 시 이벤트 처리
@@ -134,5 +149,9 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
         intent.putExtra("Opponent", opponentUid)    //상대방 정보
         intent.putExtra("ChatRoomKey", "") //채팅방 키
         context.startActivity(intent)
+    }
+
+    private fun updateLikeButtonState(button: ImageView, isLiked: Boolean) {
+        button.setImageResource(if (isLiked) R.drawable.favorite_pink else R.drawable.baseline_favorite_24)
     }
 }

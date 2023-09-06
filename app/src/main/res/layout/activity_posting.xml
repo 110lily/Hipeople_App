@@ -142,7 +142,6 @@
                         android:layout_weight="@integer/material_motion_duration_long_1"
                         android:background="@drawable/rounded_rectangle"
                         android:backgroundTint="@color/gray"
-                        android:gravity="center"
                         android:hint="댓글을 작성해주세요"
                         android:inputType="text"
                         app:layout_anchor="@+id/recyclerComment" />

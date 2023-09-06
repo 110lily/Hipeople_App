@@ -60,7 +60,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="vertical">
@@ -76,8 +77,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
                             android:text="Name"
+                            android:fontFamily="@font/cafe24oneprettynight"
                             android:textColor="@color/black"
-                            android:textSize="30sp"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -87,15 +89,15 @@
 
                             <ImageButton
                                 android:id="@+id/btnChat"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:background="@drawable/tablayout2"
                                 android:backgroundTint="@color/black" />
 
                             <ImageButton
                                 android:id="@+id/btnLike"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:adjustViewBounds="true"
@@ -121,8 +123,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="150dp"
                             android:text="Adress"
+                            android:fontFamily="@font/cafe24oneprettynight"
                             android:textColor="@color/black"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>

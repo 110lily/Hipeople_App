@@ -28,6 +28,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
 import com.myungwoo.datingappkotlinproject.databinding.FragmentThreeBinding
 import com.google.android.gms.common.api.Status
@@ -53,19 +54,12 @@ import java.util.*
 class RestFragment : Fragment(), OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
 
-    private lateinit var binding: FragmentThreeBinding
-    private lateinit var appMainActivity: AppMainActivity
-    private val PERMISSIONS_REQUEST_CODE = 100
-
+    lateinit var binding: FragmentThreeBinding
+    var search_LATLNG = LatLng(0.0, 0.0)
     private var mMap: GoogleMap? = null
     private var currentMarker: Marker? = null
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var locationRequest: LocationRequest? = null
-    private var location: Location? = null
-    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
-
-    var search_LATLNG = LatLng(0.0, 0.0)
     var needRequest = false
+    lateinit var appMainActivity: AppMainActivity
     var previous_marker: MutableList<Marker>? = null
     var currentflag = 0
     var searchflag = 0
@@ -81,6 +75,10 @@ class RestFragment : Fragment(), OnMapReadyCallback,
     var mCurrentLocatiion: Location? = null
     var currentPosition: LatLng? = null
 
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var locationRequest: LocationRequest? = null
+    private var location: Location? = null
+    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -99,6 +97,10 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         )
         mLayout = binding.layoutMain
+        //위치 권한요청
+        if ( isLocationPermissionRequired() ){
+            checkPermissions()
+        }
 
         //위치정보를 요청하는코드 2분마다 업데이트
         locationRequest = LocationRequest()
@@ -116,11 +118,13 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         //이전에 추가한 마커들을 저장하기 위한 ArrayList 객체를 생성하는 코드입니다.
         previous_marker = ArrayList()
 
+
         val btnRestaurant: Button = binding.btnRestaurant
         btnRestaurant.setOnClickListener {
             if (currentPosition != null && search_LATLNG != null) {
                 lifecycleScope.launch(Dispatchers.Default) {
-                    // 만약 showRestInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행
+                    // 여기서 무거운 작업을 수행. 만약 showCafeInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행하도록 만드세요.
+
                     withContext(Dispatchers.Main) {
                         // UI 업데이트는 메인 스레드에서 수행
                         showRestInformation(currentPosition!!, search_LATLNG)
@@ -136,7 +140,8 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         btnCafe.setOnClickListener {
             if (currentPosition != null && search_LATLNG != null) {
                 lifecycleScope.launch(Dispatchers.Default) {
-                    // 여기서 무거운 작업을 수행. 만약 showCafeInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행
+                    // 만약 showRestInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행하도록 만드세요.
+
                     withContext(Dispatchers.Main) {
                         // UI 업데이트는 메인 스레드에서 수행
                         showCafeInformation(currentPosition!!, search_LATLNG)
@@ -147,58 +152,42 @@ class RestFragment : Fragment(), OnMapReadyCallback,
                 Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-        checkPermission_request()
         return binding.root
     }
+    private fun isLocationPermissionRequired(): Boolean {
+        val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager2)
+        val currentFragment = (viewPager.adapter as? CustomAdapter)?.createFragment(viewPager.currentItem)
 
-    private fun checkPermission_request() {
-        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
-        ) {
-            // 권한이 이미 허용됨
-        } else {
+        return currentFragment is RestFragment
+    }
+    private fun checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // 권한 요청
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("위치 정보 요청")
-            builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
+            builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 목적으로 사용되며, 거부하면 기능을 이용하지 못합니다. 단, 설정에서 다시 위치 기능을 허용할 수 있습니다. ")
             builder.setPositiveButton("동의") { dialog, which ->
-                requestLocationPermission()
+                requestPermissions(REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE)
             }
             builder.setNegativeButton("거부") { dialog, which ->
-                showToastMessage("위치 정보 권한이 거부되었습니다.")
+                Snackbar.make(
+                    mLayout!!, "거부 되었습니다.",
+                    Snackbar.LENGTH_INDEFINITE )
             }
             val dialog = builder.create()
             dialog.show()
+        } else {
+            // 이미 권한이 부여된 경우
+
+            if (mFusedLocationClient != null) {
+                startLocationUpdates()
+            } else {
+                Log.e(TAG, "mFusedLocationClient is null")
+            }
+
         }
     }
-
-    private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
-            PERMISSIONS_REQUEST_CODE
-        )
-    }
-
-    private fun showToastMessage(message: String) {
-        mLayout?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() }
-    }
-
-
-
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         Log.d(TAG, "onMapReady :")
@@ -302,6 +291,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
 
     private fun startLocationUpdates() {
         //위치 서비스 사용가능 여부를 확인
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(appMainActivity)
         if (!checkLocationServicesStatus()) {
             Log.d(TAG, "startLocationUpdates : call showDialogForLocationServiceSetting")
             //사용 불가능할경우 showDialogForLocationServiceSetting() 함수를 호출하여 사용자에게 위치 서비스 활성화를 요청합니다.
@@ -331,7 +321,9 @@ class RestFragment : Fragment(), OnMapReadyCallback,
                 locationCallback,
                 Looper.myLooper()
             )
-            if (checkPermission()) mMap!!.isMyLocationEnabled = true
+            if (checkPermission() && mMap != null) {
+                mMap?.isMyLocationEnabled = true
+            }
         }
     }
 
@@ -446,53 +438,38 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         grandResults: IntArray
     ) {
         super.onRequestPermissionsResult(permsRequestCode, permissions, grandResults)
-        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.size == REQUIRED_PERMISSIONS.size) {
 
-            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.size == REQUIRED_PERMISSIONS.size) {
             var check_result = true
 
-
-            // 모든 퍼미션을 허용했는지 체크합니다.
             for (result: Int in grandResults) {
                 if (result != PackageManager.PERMISSION_GRANTED) {
                     check_result = false
                     break
                 }
             }
-            if (check_result) {
 
-                // 퍼미션을 허용했다면 위치 업데이트를 시작합니다.
+            if (check_result) {
                 startLocationUpdates()
             } else {
-                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다. 2가지 경우가 있습니다.
                 if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        appMainActivity,
+                        requireActivity(),
                         REQUIRED_PERMISSIONS[0]
                     )
                     || ActivityCompat.shouldShowRequestPermissionRationale(
-                        appMainActivity,
+                        requireActivity(),
                         REQUIRED_PERMISSIONS[1]
                     )
                 ) {
-
-
-                    // 사용자가 거부만 선택한 경우에는 앱을 다시 실행하여 허용을 선택하면 앱을 사용할 수 있습니다.
                     Snackbar.make(
-                        mLayout!!, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요. ",
+                        requireView(), "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.",
                         Snackbar.LENGTH_INDEFINITE
-                    ).setAction(
-                        "확인"
-                    ) { requireActivity().finish() }.show()
+                    ).setAction("확인") { requireActivity().finish() }.show()
                 } else {
-
-
-                    // "다시 묻지 않음"을 사용자가 체크하고 거부를 선택한 경우에는 설정(앱 정보)에서 퍼미션을 허용해야 앱을 사용할 수 있습니다.
                     Snackbar.make(
-                        mLayout!!, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ",
+                        requireView(), "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.",
                         Snackbar.LENGTH_INDEFINITE
-                    ).setAction(
-                        "확인"
-                    ) { requireActivity().finish() }.show()
+                    ).setAction("확인") { requireActivity().finish() }.show()
                 }
             }
         }
@@ -714,5 +691,4 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             }
         }
     }
-
 }

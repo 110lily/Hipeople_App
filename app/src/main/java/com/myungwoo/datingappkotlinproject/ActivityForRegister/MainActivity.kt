@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivityMainBinding
     lateinit var auth: FirebaseAuth
     lateinit var spf: SharedPreferences
-    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
-
+//    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
+//
 //    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
 //    var REQUIRED_PERMISSIONS = arrayOf(
 //        Manifest.permission.ACCESS_FINE_LOCATION,
@@ -52,11 +52,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        mLayout = binding.mainActivity
-//
+
 //        // 위치 정보 권한 팝업을 띄우기 위한 코드
 //        val builder = AlertDialog.Builder(this)
 //        builder.setTitle("위치 정보 요청")
-//        builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
+//        builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 백그라운드에서 실행되며, 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
 //        builder.setPositiveButton("동의") { dialog, which ->
 //            requestLocationPermission()
 //        }
@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        val dialog = builder.create()
 //        dialog.show()
 
-        /** 예전 위치 코드 */
 //        //런타임 퍼미션 처리
 //        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
 //        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
@@ -112,8 +111,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //                )
 //            }
 //        }
-
-        /** 예전 위치 코드 끝 */
 
         // 한번 로그인 후 자동로그인 기능을 위한 SharedPreference 정의
         // SharedPreference에 저장된 Boolean 값이 true 라면 자동 로그인 후 AppMainActivity로 이동
@@ -167,17 +164,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             spfEdit.apply()
                             val intent = Intent(
                                 this,
-                                com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity::class.java
+                                AppMainActivity::class.java
                             )
                             startActivity(intent)
                             finish()
                         } else {
                             // 로그인 실패 시 아이디가 잘못 입력 되었는지, 패스워드가 잘못 입력되었는지 Firebase RealtimeDatabase에서 확인
                             val id = binding.edtId.text.toString()
-                            Firebase.database.reference.child("user").orderByChild("userEmail")
+                            Firebase.database.reference.child("User").child("users").orderByChild("id")
                                 .equalTo(id)
                                 .addListenerForSingleValueEvent(object : ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
+                                            Log.e("ddddddddddddddd",snapshot.value.toString() )
                                         if (snapshot.value != null) {
                                             Toast.makeText(
                                                 this@MainActivity,

@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import com.myungwoo.datingappkotlinproject.databinding.ActivityRegisterBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -58,7 +55,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.tvAno.setTextColor(Color.RED)
                     binding.llPassword.visibility = View.INVISIBLE
 
-                } else if (flag == false) {
+                } else if (!flag) {
                     binding.llPassword.visibility = View.INVISIBLE
                 }
             }
@@ -127,7 +124,7 @@ class RegisterActivity : AppCompatActivity() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {}
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.value == null) {
+                    if (snapshot.value == null) { //채팅방이 없는 경우
                         flag = true
                     } else if (snapshot.value != null) {
                         flag = false
@@ -145,13 +142,13 @@ class RegisterActivity : AppCompatActivity() {
 
     fun checkRegisterEmail(email: String) {
         emailFlag = false
-        if (email.isNotEmpty() && !email.contains("@") && !(email.length > 15)) {
+        if (email.isNotEmpty() && !email.contains("@") && email.length < 10) {
             emailFlag = false
             binding.tvAno.visibility = View.VISIBLE
             binding.tvAno.text = """아이디 형식이 올바르지 않습니다. 
                 | ex) XXXXX@gmail.com""".trimMargin()
             binding.tvAno.setTextColor(Color.RED)
-        } else if (email.isNotEmpty() && email.contains("@") && email.length > 15) {
+        } else if (email.isNotEmpty() && email.contains("@") && email.length > 10) {
             binding.tvAno.visibility = View.VISIBLE
             emailFlag = true
         }
