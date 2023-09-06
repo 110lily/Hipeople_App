@@ -1,8 +1,11 @@
 # Hipeople_DatingApp
 # 소개팅앱 프로젝트
+https://play.google.com/store/apps/details?id=com.myungwoo.datingappkotlinproject
+
 ## 👏8/19일 notification 알림기능 구현완료(상대방이 보낸 메시지 확인가능)
 
-![image](https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/ea9e85bc-19db-4b79-ba24-6f56d188d3d0)
+
+![2023-08-29 01 45 30](https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/3ee3f8f3-c2f1-4a2e-bb6f-401be8ae87ac)
 
 
 
