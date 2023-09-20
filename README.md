@@ -1,19 +1,11 @@
 # Hipeople_DatingApp
 # 소개팅앱 프로젝트
-https://play.google.com/store/apps/details?id=com.myungwoo.datingappkotlinproject
+### <img src="https://github.com/AnMyungwoo94/BeautyIdea_Shopping_App/assets/126849689/d0ba6eb9-f5c2-4839-ad30-6f8bf65c7452" alt="구글 플레이 이미지" width="30" height="30" style="float:left"> [이곳을 클릭하여 구글플레이 스토어로 이동](https://play.google.com/store/apps/details?id=com.myungwoo.datingappkotlinproject)
 
-## 👏8/19일 notification 알림기능 구현완료(상대방이 보낸 메시지 확인가능)
-
+### 👏8/19일 notification 알림기능 구현완료(상대방이 보낸 메시지 확인가능)
 
 ![2023-08-29 01 45 30](https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/3ee3f8f3-c2f1-4a2e-bb6f-401be8ae87ac)
-
-
-
-
-
 https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/e4ff2a73-3e26-489b-b854-334bb2162d44
-
-
 
 ## ▶ 앱 소개
  "간단한 인삿말로 인연을 만들어보세요 “
