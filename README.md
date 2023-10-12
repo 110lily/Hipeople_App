@@ -1,4 +1,4 @@
-# Hipeople_DatingApp [소개팅, 친목도보앱 팀 프로젝트]
+# Hipeople_DatingApp [소개팅, 친목도모앱 팀 프로젝트]
 
 ### <img src="https://github.com/AnMyungwoo94/BeautyIdea_Shopping_App/assets/126849689/d0ba6eb9-f5c2-4839-ad30-6f8bf65c7452" alt="구글 플레이 이미지" width="30" height="30" style="float:left"> [이곳을 클릭하여 구글플레이 스토어로 이동](https://play.google.com/store/apps/details?id=com.myungwoo.datingappkotlinproject)
 
