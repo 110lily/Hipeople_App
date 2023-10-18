@@ -98,9 +98,6 @@
         <activity
             android:name=".community.InputActivity"
             android:exported="false" />
-        <activity
-            android:name=".ActivityForRegister.MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

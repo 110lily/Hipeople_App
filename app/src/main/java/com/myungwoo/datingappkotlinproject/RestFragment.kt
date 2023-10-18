@@ -49,8 +49,6 @@ import noman.googleplaces.*
 import java.io.IOException
 import java.util.*
 
-
-
 class RestFragment : Fragment(), OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
 
@@ -118,38 +116,43 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         //이전에 추가한 마커들을 저장하기 위한 ArrayList 객체를 생성하는 코드입니다.
         previous_marker = ArrayList()
 
-
+        //음식점 버튼 클릭시
         val btnRestaurant: Button = binding.btnRestaurant
         btnRestaurant.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             if (currentPosition != null && search_LATLNG != null) {
                 lifecycleScope.launch(Dispatchers.Default) {
                     // 여기서 무거운 작업을 수행. 만약 showCafeInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행하도록 만드세요.
-
                     withContext(Dispatchers.Main) {
                         // UI 업데이트는 메인 스레드에서 수행
+
                         showRestInformation(currentPosition!!, search_LATLNG)
                     }
                 }
             } else {
                 // 위치 정보가 없는 경우 처리
-                Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "위치 정보가 없습니다. 휴대폰 설정 - 위치정보에서 Hipeople앱을 허용해주세요", Toast.LENGTH_SHORT).show()
+                checkPermissions()
             }
         }
 
+        //카페 버튼 클릭시
         val btnCafe: Button = binding.btnCafe
         btnCafe.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             if (currentPosition != null && search_LATLNG != null) {
                 lifecycleScope.launch(Dispatchers.Default) {
                     // 만약 showRestInformation 내부에 무거운 작업이 있다면, 그 작업만을 분리해서 이 곳에서 수행하도록 만드세요.
-
                     withContext(Dispatchers.Main) {
                         // UI 업데이트는 메인 스레드에서 수행
+
                         showCafeInformation(currentPosition!!, search_LATLNG)
                     }
                 }
             } else {
                 // 위치 정보가 없는 경우 처리
-                Toast.makeText(context, "위치 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "위치 정보가 없습니다. 휴대폰 설정 - 위치정보에서 Hipeople앱을 허용해주세요 ", Toast.LENGTH_SHORT).show()
+                checkPermissions()
             }
         }
         return binding.root
@@ -529,54 +532,61 @@ class RestFragment : Fragment(), OnMapReadyCallback,
 
     override fun onPlacesSuccess(places: MutableList<Place>?) {
 
-        //디폴트 위치, Seoul
-        var descripter: BitmapDescriptor? = null
+        lifecycleScope.launch(Dispatchers.Main) {
+            binding.progressBar.visibility = View.GONE
 
-        if (currentflag == 1) {
-            var bitmapDrawable: BitmapDrawable
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                bitmapDrawable = context?.getDrawable(R.drawable.restaurant) as BitmapDrawable
-            } else {
-                bitmapDrawable = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.restaurant
-                ) as BitmapDrawable
-            }
-            val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
-            descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
-        } else if (currentflag == 2) {
-            var bitmapDrawable: BitmapDrawable
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                bitmapDrawable = context?.getDrawable(R.drawable.cafe) as BitmapDrawable
-            } else {
-                bitmapDrawable =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.cafe) as BitmapDrawable
-            }
-            val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
-            descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
-        }
-        requireActivity().runOnUiThread {
-            if (places != null) {
-                for (place in places) {
-                    val latLng = LatLng(
-                        place.latitude, place.longitude
-                    )
-                    val markerSnippet = getCurrentAddress(latLng)
-                    val markerOptions = MarkerOptions()
-                    markerOptions.position(latLng)
-                    markerOptions.icon(descripter)
-                    markerOptions.title(place.name)
-                    markerOptions.snippet(markerSnippet)
-                    markerOptions.alpha(0.5f)
-                    val item = mMap!!.addMarker(markerOptions)
-                    previous_marker?.add(item as Marker)
+            //디폴트 위치, Seoul
+            var descripter: BitmapDescriptor? = null
+
+            if (currentflag == 1) {
+                var bitmapDrawable: BitmapDrawable
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    bitmapDrawable = context?.getDrawable(R.drawable.restaurant) as BitmapDrawable
+                } else {
+                    bitmapDrawable = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.restaurant
+                    ) as BitmapDrawable
                 }
+                val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
+                descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
+            } else if (currentflag == 2) {
+                var bitmapDrawable: BitmapDrawable
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    bitmapDrawable = context?.getDrawable(R.drawable.cafe) as BitmapDrawable
+                } else {
+                    bitmapDrawable =
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.cafe
+                        ) as BitmapDrawable
+                }
+                val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
+                descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
             }
-            //중복 마커 제거
-            val hashSet = HashSet<Marker>()
-            hashSet.addAll(previous_marker!!)
-            previous_marker?.clear()
-            previous_marker?.addAll(hashSet)
+//            requireActivity().runOnUiThread {
+                if (places != null) {
+                    for (place in places) {
+                        val latLng = LatLng(
+                            place.latitude, place.longitude
+                        )
+                        val markerSnippet = getCurrentAddress(latLng)
+                        val markerOptions = MarkerOptions()
+                        markerOptions.position(latLng)
+                        markerOptions.icon(descripter)
+                        markerOptions.title(place.name)
+                        markerOptions.snippet(markerSnippet)
+                        markerOptions.alpha(0.5f)
+                        val item = mMap!!.addMarker(markerOptions)
+                        previous_marker?.add(item as Marker)
+                    }
+                }
+                //중복 마커 제거
+                val hashSet = HashSet<Marker>()
+                hashSet.addAll(previous_marker!!)
+                previous_marker?.clear()
+                previous_marker?.addAll(hashSet)
+//            }
         }
     }
 
@@ -585,6 +595,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
 
     fun showRestInformation(location: LatLng, location2: LatLng) {
         currentflag = 1
+
         if (searchflag == 1) {
             mMap!!.clear() //지도 클리어
             if (previous_marker != null)
@@ -674,7 +685,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
                 .key(BuildConfig.googleMap_Key)
                 .latlng(location2.latitude, location2.longitude) //현재 위치
                 .radius(500) //500 미터 내에서 검색
-                .type(PlaceType.CAFE) //음식점
+                .type(PlaceType.CAFE) //카페
                 .build()
                 .execute()
             if (circle1KM == null) {

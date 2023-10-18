@@ -1,5 +1,7 @@
 package com.myungwoo.datingappkotlinproject.ActivityForMain
 
+
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -99,18 +101,19 @@ class AppMainActivity : AppCompatActivity() {
                 }
             }
 
-
         return super.onOptionsItemSelected(item)
     }
+
+
 
     // Fragment 탭 포지션 지정
     fun tabCustomView(position: Int): View {
         val binding = UsertabButtonBinding.inflate(layoutInflater)
         when (position) {
-            0 -> binding.ivIcon.setImageResource(R.drawable.tablayout1)
-            1 -> binding.ivIcon.setImageResource(R.drawable.tablayout2)
-            2 -> binding.ivIcon.setImageResource(R.drawable.tablayout3)
-            3 -> binding.ivIcon.setImageResource(R.drawable.tablayout4)
+            0 -> binding.ivIcon.setImageResource(R.drawable.baseline_camera_front_24)
+            1 -> binding.ivIcon.setImageResource(R.drawable.baseline_chat_24)
+            2 -> binding.ivIcon.setImageResource(R.drawable.baseline_map_24)
+            3 -> binding.ivIcon.setImageResource(R.drawable.baseline_people_24)
         }
         return binding.root
     }
