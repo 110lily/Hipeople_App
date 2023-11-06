@@ -10,9 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
-import com.myungwoo.datingappkotlinproject.ActivityForRegister.MainActivity
-import com.myungwoo.datingappkotlinproject.R
+import com.myungwoo.datingappkotlinproject.activityForRegister.MainActivity
 import com.myungwoo.datingappkotlinproject.UserInfoData
 import com.myungwoo.datingappkotlinproject.community.PostingDAO
 import com.myungwoo.datingappkotlinproject.databinding.ActivityProfileBinding
@@ -121,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this, com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity::class.java))
+        startActivity(Intent(this, com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity::class.java))
         finish()
     }
 

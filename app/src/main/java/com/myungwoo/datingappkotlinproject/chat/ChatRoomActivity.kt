@@ -1,23 +1,18 @@
 package com.myungwoo.datingappkotlinproject.chat
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.myungwoo.datingappkotlinproject.ActivityForRegister.MainActivity
 import com.myungwoo.datingappkotlinproject.UserInfoData
 import com.myungwoo.datingappkotlinproject.chat.fcm.NotiModel
 import com.myungwoo.datingappkotlinproject.chat.fcm.PushNotification
@@ -31,7 +26,6 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.TimeZone

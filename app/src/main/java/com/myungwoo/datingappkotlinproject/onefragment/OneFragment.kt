@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+import com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity
 import com.myungwoo.datingappkotlinproject.R
 import com.myungwoo.datingappkotlinproject.UserInfoData
 import com.myungwoo.datingappkotlinproject.databinding.FragmentOneBinding
@@ -31,7 +31,7 @@ class OneFragment : Fragment() {
     var currentUserUid = Firebase.auth.currentUser!!.uid
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainActivity = context as com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity // mainActivity context 얻기
+        mainActivity = context as com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity // mainActivity context 얻기
     }
 
     override fun onCreateView(

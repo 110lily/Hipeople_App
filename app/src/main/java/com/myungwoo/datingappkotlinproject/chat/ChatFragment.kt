@@ -9,20 +9,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
 import com.myungwoo.datingappkotlinproject.databinding.FragmentChatBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 
 class ChatFragment : Fragment() {
     lateinit var binding: FragmentChatBinding
-    lateinit var appMainActivity: com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
+    lateinit var appMainActivity: com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity
     lateinit var recylcerChatroom: RecyclerView
     lateinit var adapter : RecyclerChatRoomsAdapter
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        appMainActivity = context as com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity // mainActivity context 얻기
+        appMainActivity = context as com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity // mainActivity context 얻기
     }
 
     // Fragment의 생명주기를 이용하여 계속 새로운 값을 업데이트 하기

@@ -1,16 +1,12 @@
 package com.myungwoo.datingappkotlinproject
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import com.myungwoo.datingappkotlinproject.ActivityForRegister.MainActivity
+import com.myungwoo.datingappkotlinproject.activityForRegister.MainActivity
 import com.myungwoo.datingappkotlinproject.databinding.ActivitySplashActivtyBinding
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 
 class SplashActivty : AppCompatActivity() {
     lateinit var binding: ActivitySplashActivtyBinding

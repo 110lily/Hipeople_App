@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity
 import com.myungwoo.datingappkotlinproject.UserInfoData
 import com.myungwoo.datingappkotlinproject.databinding.ActivityLikePeopleBinding
 import com.google.firebase.auth.ktx.auth
@@ -75,7 +73,7 @@ class likePeople_Activity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startActivity(Intent(this, com.myungwoo.datingappkotlinproject.ActivityForMain.AppMainActivity::class.java))
+        startActivity(Intent(this, com.myungwoo.datingappkotlinproject.activityForMain.AppMainActivity::class.java))
         finish()
     }
 

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.DatingAppKotlinProject"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityForRegister.MainActivity"
+            android:name=".activityForRegister.MainActivity"
             android:exported="false" />
 
         <meta-data
@@ -63,31 +63,31 @@
             android:value="${googleMap_Key_manifest}" />
 
         <activity
-            android:name=".ActivityForMain.AppMainActivity"
+            android:name=".activityForMain.AppMainActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.EduActivity"
+            android:name=".activityForRegister.EduActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.AddressActivity"
+            android:name=".activityForRegister.AddressActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.HeightActivity"
+            android:name=".activityForRegister.HeightActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.BirthActivity"
+            android:name=".activityForRegister.BirthActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.PurposeActivity"
+            android:name=".activityForRegister.PurposeActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.NickNameActivity"
+            android:name=".activityForRegister.NickNameActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.GenderActivity"
+            android:name=".activityForRegister.GenderActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityForRegister.RegisterActivity"
+            android:name=".activityForRegister.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".chat.ChatRoomActivity"

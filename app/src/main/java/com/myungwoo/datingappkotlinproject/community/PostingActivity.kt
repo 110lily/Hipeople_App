@@ -71,10 +71,8 @@ class PostingActivity : AppCompatActivity() {
             // RealTimeDatabase에 댓글 저장
             postingDAO.databaseReference!!.child(key).child("comment").child("$postingKey")
                 .setValue(commentData).addOnSuccessListener { // 성공시
-                    Toast.makeText(this, "파이어베이스 comment에 등록 성공", Toast.LENGTH_SHORT).show()
                     binding.edtComment.text.clear()
                 }.addOnFailureListener { // 실패시
-                    Toast.makeText(this, "파이어베이스 comment에 등록 실패", Toast.LENGTH_SHORT).show()
                 }
         }
 

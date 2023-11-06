@@ -11,10 +11,7 @@ import com.myungwoo.datingappkotlinproject.chat.ChatRoomActivity
 import com.myungwoo.datingappkotlinproject.databinding.ListTalkItemMineBinding
 import com.myungwoo.datingappkotlinproject.databinding.ListTalkItemOthersBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 
 class RecyclerMessagesAdapter(
@@ -90,18 +87,38 @@ class RecyclerMessagesAdapter(
         var txtDate = itemView.txtDate
         var txtIsShown = itemView.txtIsShown
 
-        fun bind(position: Int) {           //메시지 UI 항목 초기화
+        private val messageRef: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("ChatRoom")
+                .child("chatRooms").child(chatRoomKey!!).child("messages")
+
+        private var valueEventListener: ValueEventListener? = null
+
+        fun bind(position: Int) {
             var message = messages[position]
             var sendDate = message.sendedDate
 
             txtMessage.text = message.content
             txtDate.text = getDateText(sendDate)
-            if (message.confirmed.equals(true))           //확인 여부 표시
-                txtIsShown.visibility = View.GONE
-            else
-                txtIsShown.visibility = View.VISIBLE
-            setShown(position)             //해당 메시지 확인하여 서버로 전송
+
+            // ValueEventListener를 제거 (재사용될 때를 대비하여)
+            if (valueEventListener != null) {
+                messageRef.child(messageKeys[position]).removeEventListener(valueEventListener!!)
+            }
+            // ValueEventListener를 생성 및 추가
+            valueEventListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val confirmed = snapshot.child("confirmed").getValue(Boolean::class.java) ?: false
+                    txtIsShown.visibility = if (confirmed) View.GONE else View.VISIBLE
+                    if (!confirmed) { // 만약 메시지가 아직 읽지 않았다면
+                        setShown(position) // 메시지를 읽었음을 표시
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            }
+            messageRef.child(messageKeys[position]).addValueEventListener(valueEventListener!!)
         }
+
 
         fun getDateText(sendDate: String): String {    //메시지 전송 시각 생성
             var dateText = ""
@@ -141,17 +158,37 @@ class RecyclerMessagesAdapter(
         var txtDate = itemView.txtDate
         var txtIsShown = itemView.txtIsShown
 
-        fun bind(position: Int) {            //메시지 UI 레이아웃 초기화
-            var message = messages[position]
-            var sendDate = message.sendedDate
-            txtMessage.text = message.content
+        private val messageRef: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("ChatRoom")
+                .child("chatRooms").child(chatRoomKey!!).child("messages")
 
+        private var valueEventListener: ValueEventListener? = null
+
+        fun bind(position: Int) {
+            val message = messages[position]
+            val sendDate = message.sendedDate
+            txtMessage.text = message.content
             txtDate.text = getDateText(sendDate)
 
-            if (message.confirmed.equals(true))
-                txtIsShown.visibility = View.GONE
-            else
-                txtIsShown.visibility = View.VISIBLE
+            // ValueEventListener를 제거 (재사용될 때를 대비하여)
+            valueEventListener?.let {
+                messageRef.child(messageKeys[position]).removeEventListener(it)
+            }
+
+            // ValueEventListener를 생성 및 추가
+            valueEventListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val confirmed = snapshot.child("confirmed").getValue(Boolean::class.java) ?: false
+                    if (confirmed) {
+                        txtIsShown.visibility = View.GONE
+                    } else {
+                        txtIsShown.visibility = View.VISIBLE
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {}
+            }
+            messageRef.child(messageKeys[position]).addValueEventListener(valueEventListener!!)
+
         }
 
         fun getDateText(sendDate: String): String {        //메시지 전송 시각 생성
