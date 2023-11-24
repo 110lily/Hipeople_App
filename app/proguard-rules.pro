@@ -27,11 +27,11 @@
 -keep class com.myungwoo.datingappkotlinproject.chat.fcm.**
 -keep class com.myungwoo.datingappkotlinproject.chat.fcm.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.community.**
--keep class com.myungwoo.datingappkotlinproject.community.** { *; }
+-keep class com.myungwoo.datingappkotlinproject.dao.**
+-keep class com.myungwoo.datingappkotlinproject.dao.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.onefragment.**
--keep class com.myungwoo.datingappkotlinproject.onefragment.** { *; }
+-keep class com.myungwoo.datingappkotlinproject.cardsteck.**
+-keep class com.myungwoo.datingappkotlinproject.cardsteck.** { *; }
 
 -keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.**
 -keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.** { *; }

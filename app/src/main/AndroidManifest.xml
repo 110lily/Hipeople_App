@@ -20,7 +20,7 @@
         android:theme="@style/Theme.DatingAppKotlinProject"
         tools:targetApi="31">
         <activity
-            android:name=".activityForRegister.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="false" />
 
         <meta-data
@@ -31,11 +31,11 @@
             android:resource="@color/btnnext" />
 
         <activity
-            android:name=".likePeople.likePeople_Activity"
+            android:name=".view.activity.likePeople_Activity"
             android:exported="false" />
 
         <service
-            android:name=".chat.fcm.FirebaseService"
+            android:name=".fcm.FirebaseService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -43,7 +43,7 @@
         </service>
 
         <activity
-            android:name=".SplashActivty"
+            android:name=".view.activity.SplashActivty"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,10 +52,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".profile.ChangeActivity"
+            android:name=".view.activity.ChangeActivity"
             android:exported="false" />
         <activity
-            android:name=".profile.ProfileActivity"
+            android:name=".view.activity.ProfileActivity"
             android:exported="false" />
 
         <meta-data
@@ -63,40 +63,40 @@
             android:value="${googleMap_Key_manifest}" />
 
         <activity
-            android:name=".activityForMain.AppMainActivity"
+            android:name=".view.activity.AppMainActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.EduActivity"
+            android:name=".view.activity.EduActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.AddressActivity"
+            android:name=".view.activity.AddressActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.HeightActivity"
+            android:name=".view.activity.HeightActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.BirthActivity"
+            android:name=".view.activity.BirthActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.PurposeActivity"
+            android:name=".view.activity.PurposeActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.NickNameActivity"
+            android:name=".view.activity.NickNameActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.GenderActivity"
+            android:name=".view.activity.GenderActivity"
             android:exported="false" />
         <activity
-            android:name=".activityForRegister.RegisterActivity"
+            android:name=".view.activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".chat.ChatRoomActivity"
+            android:name=".view.activity.ChatRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".community.PostingActivity"
+            android:name=".view.activity.PostingActivity"
             android:exported="false" />
         <activity
-            android:name=".community.InputActivity"
+            android:name=".view.activity.InputActivity"
             android:exported="false" />
     </application>
 
