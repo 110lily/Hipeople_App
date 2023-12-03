@@ -20,6 +20,12 @@
 -API : noman.placesapi:placesAPI:1.1.3
 ```
 
+#### DB 및 체크리스트
+[hipeople DB.docx](https://github.com/AnMyungwoo94/Hipeople_App/files/13539174/hipeople.DB.docx)
+
+[hipeople 체크리스트_안명우.docx](https://github.com/AnMyungwoo94/Hipeople_App/files/13539175/hipeople._.docx)
+
+
 #### 맡은 역할
 ```sh
 - 전체 UI 디자인 작업
