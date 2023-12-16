@@ -17,96 +17,17 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-// 앱 실행시 로딩화면 후 첫 메인화면(로그인 및 회원가입 담당)
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    lateinit var binding: ActivityMainBinding
-    lateinit var auth: FirebaseAuth
-    lateinit var spf: SharedPreferences
-//    private var mLayout: View? = null // Snackbar 사용하기 위해서는 View가 필요합니다.
-//
-//    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
-//    var REQUIRED_PERMISSIONS = arrayOf(
-//        Manifest.permission.ACCESS_FINE_LOCATION,
-//        Manifest.permission.ACCESS_COARSE_LOCATION
-//    ) // 외부 저장소
-//
-//    // 구글맵 퍼미션 정의
-//    companion object {
-//        private val TAG = "googlemap_example"
-//        private val GPS_ENABLE_REQUEST_CODE = 2001
-//        private val UPDATE_INTERVAL_MS = 1000 // 1초
-//        private val FASTEST_UPDATE_INTERVAL_MS = 500 // 0.5초
-//        private val PERMISSIONS_REQUEST_CODE = 100
-//    }
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var spf: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        mLayout = binding.mainActivity
 
-//        // 위치 정보 권한 팝업을 띄우기 위한 코드
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle("위치 정보 요청")
-//        builder.setMessage("앱에서 위치 정보를 사용하려고 합니다. 백그라운드에서 실행되며, 이 기능을 활성화하면 주변에 있는 맛집, 카페를 추천받을 수 있습니다.")
-//        builder.setPositiveButton("동의") { dialog, which ->
-//            requestLocationPermission()
-//        }
-//        builder.setNegativeButton("거부") { dialog, which ->
-//            showToastMessage("위치 정보 권한이 거부되었습니다.")
-//        }
-//        val dialog = builder.create()
-//        dialog.show()
-
-//        //런타임 퍼미션 처리
-//        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
-//        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
-//            this,
-//            Manifest.permission.ACCESS_FINE_LOCATION
-//        )
-//        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
-//            this,
-//            Manifest.permission.ACCESS_COARSE_LOCATION
-//        )
-//        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-//            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
-//        ) {
-//
-//            // 2. 이미 퍼미션을 가지고 있다면
-//            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
-//        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
-//
-//            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                    this,
-//                    REQUIRED_PERMISSIONS[0]
-//                )
-//            ) {
-//
-//                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
-//                Snackbar.make(
-//                    mLayout!!, "주변 맛집,카페를 추천받기 위해서는 사용자의 위치 접근 권한이 필요합니다.",
-//                    Snackbar.LENGTH_INDEFINITE
-//                )
-//                    .setAction("확인") { // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-//                        ActivityCompat.requestPermissions(
-//                            this, REQUIRED_PERMISSIONS,
-//                            PERMISSIONS_REQUEST_CODE
-//                        )
-//                    }.show()
-//            } else {
-//                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-//                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-//                ActivityCompat.requestPermissions(
-//                    this, REQUIRED_PERMISSIONS,
-//                    PERMISSIONS_REQUEST_CODE
-//                )
-//            }
-//        }
-
-        // 한번 로그인 후 자동로그인 기능을 위한 SharedPreference 정의
-        // SharedPreference에 저장된 Boolean 값이 true 라면 자동 로그인 후 AppMainActivity로 이동
-        auth = FirebaseAuth.getInstance()       // Firebase 계정 관련 변수
+        auth = FirebaseAuth.getInstance()
         spf = getSharedPreferences("loginKeep", Context.MODE_PRIVATE)
         if (spf.getBoolean("isLogin", false)) {
             val intent = Intent(this, AppMainActivity::class.java)
@@ -120,23 +41,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnLogin -> {
-                // 로그인 함수
-                signInWithEmailAndPassword()
+                confirmLogin()
             }
+
             R.id.btnSignUp -> {
-                // 회원가입을 위한 액티비티로 이동
                 startActivity(Intent(this, RegisterActivity::class.java))
                 finish()
             }
         }
     }
 
-    // 로그인 함수
-    private fun signInWithEmailAndPassword() {
+    private fun confirmLogin() {
         try {
-            // 아이디 또는 패스워드가 입력되었는지 체크
-            if (binding.edtId.text.toString().isNullOrBlank() && binding.edtPassword.text.toString()
-                    .isNullOrBlank()
+            if (binding.edtId.text.toString().isBlank() && binding.edtPassword.text.toString()
+                    .isBlank()
             ) {
                 Toast.makeText(this, "아이디 또는 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
@@ -167,7 +85,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 .equalTo(id)
                                 .addListenerForSingleValueEvent(object : ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
-                                            Log.e("ddddddddddddddd",snapshot.value.toString() )
+                                        Log.e("ddddddddddddddd", snapshot.value.toString())
                                         if (snapshot.value != null) {
                                             Toast.makeText(
                                                 this@MainActivity,

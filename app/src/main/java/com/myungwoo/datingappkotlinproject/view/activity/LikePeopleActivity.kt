@@ -15,7 +15,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.myungwoo.datingappkotlinproject.adapter.LikePeopleAdapter
 
-class likePeople_Activity : AppCompatActivity() {
+class LikePeopleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLikePeopleBinding
     var currentUserUid = Firebase.auth.currentUser!!.uid
     lateinit var dataList: MutableList<UserInfoData>
