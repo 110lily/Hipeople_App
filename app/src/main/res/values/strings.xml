@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Hipeople</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--MainActivity (로그인 화면)-->
+    <string name="Main_Login_Empty">아이디 혹은 패스워드를 입력해 주세요</string>
+
     <string name="info_name">매력적인 프로필을 위해 프로필을 완성해주세요!</string>
+    <string name="main_signup">회원가입</string>
+    <string name="main_signup_explanation">아직 회원이 아니신가요 ?</string>
+    <string name="main_login">Login</string>
+    <string name="main_id_hint">ID</string>
+    <string name="main_password_hint">Password</string>
+    <string name="main_btn_login">로그인</string>
+
 </resources>
