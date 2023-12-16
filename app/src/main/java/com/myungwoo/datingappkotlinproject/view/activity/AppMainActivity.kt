@@ -88,7 +88,7 @@ class AppMainActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.item_likePeople -> {
-                    val intent = Intent(this, likePeople_Activity::class.java)
+                    val intent = Intent(this, LikePeopleActivity::class.java)
                     intent.putExtra("dataList", userInfoData)
                     startActivity(intent)
                     finish()
