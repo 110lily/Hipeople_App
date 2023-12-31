@@ -9,8 +9,7 @@
     <fragment android:id="@+id/autocomplete_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
 
     <fragment
         android:id="@+id/map"
@@ -32,8 +31,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnRestaurant"
@@ -55,7 +53,4 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-
-
 </LinearLayout>

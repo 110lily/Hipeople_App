@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.myungwoo.datingappkotlinproject.databinding.FragmentThreeBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -42,6 +41,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.myungwoo.datingappkotlinproject.BuildConfig
 import com.myungwoo.datingappkotlinproject.adapter.CustomAdapter
 import com.myungwoo.datingappkotlinproject.R
+import com.myungwoo.datingappkotlinproject.databinding.FragmentMapBinding
 import com.myungwoo.datingappkotlinproject.view.activity.AppMainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,12 +50,11 @@ import noman.googleplaces.*
 import java.io.IOException
 import java.util.*
 
-class RestFragment : Fragment(), OnMapReadyCallback,
+class MapFragment : Fragment(), OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
 
-    // View 바인딩 및 변수 선언
-    lateinit var binding: FragmentThreeBinding
-    lateinit var appMainActivity: AppMainActivity
+    private lateinit var binding: FragmentMapBinding
+    private lateinit var appMainActivity: AppMainActivity
     private var searchLATLNG = LatLng(0.0, 0.0) // 검색 위치 초기화
     private var mMap: GoogleMap? = null
     private var currentMarker: Marker? = null
@@ -65,41 +64,42 @@ class RestFragment : Fragment(), OnMapReadyCallback,
     private var searchflag = 0 // 검색 플래그 초기화
     private var circle: Circle? = null // 원형 영역 표시용 Circle
     private var circle1KM: CircleOptions? = null // 1KM 원형 영역 설정용 CircleOptions
-
-    // 필요한 퍼미션 정의
-    private var requiredPermissions  = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
     private var mCurrentLocatiion: Location? = null // 현재 위치 정보 초기화
     private var currentPosition: LatLng? = null // 현재 위치의 위도와 경도 초기화
-
     private var mFusedLocationClient: FusedLocationProviderClient? = null // 위치 서비스 클라이언트
     private var locationRequest: LocationRequest? = null // 위치 업데이트 요청
     private var location: Location? = null // 위치 정보
     private var mLayout: View? = null // Snackbar 사용을 위한 View
 
-    // Fragment가 Activity에 Attach될 때 호출되는 메서드
+    // 필요한 퍼미션 정의
+    private var requiredPermissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appMainActivity = context as AppMainActivity
     }
 
-    // Fragment의 뷰를 생성할 때 호출되는 메서드
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentThreeBinding.inflate(inflater)
+        binding = FragmentMapBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mLayout = binding.layoutMain
 
         // 화면 켜진 상태 유지
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         )
-
-        // Snackbar 사용을 위한 View 설정
-        mLayout = binding.layoutMain
 
         // 위치 퍼미션 요청
         if (isLocationPermissionRequired()) {
@@ -143,9 +143,8 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             }
         }
 
-        return binding.root
-    }
 
+    }
 
 
     //현재 화면에 따라 위치 권한이 필요한지 여부를 판단하는 역할을 합니다.
@@ -153,8 +152,9 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager2)
         val currentFragment = (viewPager.adapter as? CustomAdapter)?.createFragment(viewPager.currentItem)
 
-        return currentFragment is RestFragment
+        return currentFragment is MapFragment
     }
+
     private fun checkPermissions() {
         //정확한 위치정보
         val fineLocationPermissionGranted = ActivityCompat.checkSelfPermission(
@@ -186,6 +186,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
         }
         builder.create().show()
     }
+
     private fun setupLocationUpdates() {
         // 위치 정보 업데이트 요청 설정
         locationRequest = LocationRequest()
@@ -440,7 +441,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
         return hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
+                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
     }
 
     /*
@@ -483,7 +484,7 @@ class RestFragment : Fragment(), OnMapReadyCallback,
                     Snackbar.make(
                         requireView(), "퍼미션이 거부되었습니다.  퍼미션을 허용해야 합니다.",
                         Snackbar.LENGTH_INDEFINITE
-                    ).setAction("확인") {  checkPermissions() }.show()
+                    ).setAction("확인") { checkPermissions() }.show()
                 }
             }
         }
@@ -558,25 +559,25 @@ class RestFragment : Fragment(), OnMapReadyCallback,
                 descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
             }
 //            requireActivity().runOnUiThread {
-                if (places != null) {
-                    for (place in places) {
-                        val latLng = LatLng(
-                            place.latitude, place.longitude
-                        )
-                        val markerSnippet = getCurrentAddress(latLng)
-                        val markerOptions = MarkerOptions()
-                        markerOptions.position(latLng)
-                        markerOptions.icon(descripter)
-                        markerOptions.title(place.name)
-                        markerOptions.snippet(markerSnippet)
-                        markerOptions.alpha(0.5f)
-                        val item = mMap!!.addMarker(markerOptions)
-                        previousMarker?.add(item as Marker)
-                    }
+            if (places != null) {
+                for (place in places) {
+                    val latLng = LatLng(
+                        place.latitude, place.longitude
+                    )
+                    val markerSnippet = getCurrentAddress(latLng)
+                    val markerOptions = MarkerOptions()
+                    markerOptions.position(latLng)
+                    markerOptions.icon(descripter)
+                    markerOptions.title(place.name)
+                    markerOptions.snippet(markerSnippet)
+                    markerOptions.alpha(0.5f)
+                    val item = mMap!!.addMarker(markerOptions)
+                    previousMarker?.add(item as Marker)
                 }
-                //중복 마커 제거
-                val hashSet = HashSet<Marker>()
-                hashSet.addAll(previousMarker!!)
+            }
+            //중복 마커 제거
+            val hashSet = HashSet<Marker>()
+            hashSet.addAll(previousMarker!!)
             previousMarker?.clear()
             previousMarker?.addAll(hashSet)
 //            }

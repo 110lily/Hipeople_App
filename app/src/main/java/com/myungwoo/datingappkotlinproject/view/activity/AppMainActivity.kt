@@ -24,7 +24,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.myungwoo.datingappkotlinproject.adapter.CustomAdapter
 import com.myungwoo.datingappkotlinproject.data.UserInfoData
-import com.myungwoo.datingappkotlinproject.view.fragment.RestFragment
+import com.myungwoo.datingappkotlinproject.view.fragment.MapFragment
 
 // 앱 실행 / 로그인 완료 후 진행되는 액티비티
 class AppMainActivity : AppCompatActivity() {
@@ -60,7 +60,7 @@ class AppMainActivity : AppCompatActivity() {
         customAdapter = CustomAdapter(this)
         customAdapter.addListFragment(CardsteckFragment())
         customAdapter.addListFragment(ChatFragment())
-        customAdapter.addListFragment(RestFragment())
+        customAdapter.addListFragment(MapFragment())
         customAdapter.addListFragment(CommunityFragment())
         binding.viewPager2.adapter = customAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->

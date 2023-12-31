@@ -27,8 +27,6 @@ import com.myungwoo.datingappkotlinproject.dao.PostingDAO
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
-// 게시물 작성 액티비티
 class InputActivity : AppCompatActivity() {
     lateinit var binding: ActivityInputBinding
     var imageUri: Uri? = null
@@ -84,7 +82,7 @@ class InputActivity : AppCompatActivity() {
                     AnonyPostingData(docID!!, currentUser, author!!, title, content, 0, 0, 0, date)
 
                 // firebase realtimeDatabase의 picture 테이블에 클래스 저장
-                postingDAO.databaseReference?.child(docID!!)?.setValue(anonyPostingData)
+                postingDAO.databaseReference?.child(docID)?.setValue(anonyPostingData)
                     ?.addOnSuccessListener { // 성공시
                         Log.e("PictureAddActivity", "이미지 정보 업로드 성공")
                         // 사진값 저장
@@ -121,7 +119,7 @@ class InputActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDateTimeString(): String {       // 메세지 보낸 시각 정보 반환
+    private fun getDateTimeString(): String {
         try {
             var localDateTime = LocalDateTime.now()
             localDateTime.atZone(TimeZone.getDefault().toZoneId())

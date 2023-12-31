@@ -21,7 +21,6 @@ import com.myungwoo.datingappkotlinproject.data.CommentItemData
 import com.myungwoo.datingappkotlinproject.dao.PostingDAO
 import com.myungwoo.datingappkotlinproject.dao.UserDAO
 
-// 게시글 상세 화면 액티비티
 class PostingActivity : AppCompatActivity() {
     lateinit var binding: ActivityPostingBinding
     lateinit var commentList: MutableList<CommentItemData>
@@ -36,14 +35,12 @@ class PostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // 인텐트로 해당 게시글의 key값 받아오기
+
         key = intent.getStringExtra("key").toString()
-        // 받아온 key값으로 해당 게시글의 정보 띄우기
         getBoard(key)
         val dataList2 = intent.getSerializableExtra("dataList") as ArrayList<AnonyPostingData>
         val position = intent.getIntExtra("position", -1)
 
-        // mutableList 객체 생성
         dataList = mutableListOf()
         commentList = mutableListOf()
         pictureDataList = mutableListOf()
@@ -58,7 +55,6 @@ class PostingActivity : AppCompatActivity() {
                     }
                 }
             })
-        // 현재 게시물의 key 값에 등록된 댓글 가져오기
         getFireBaseCommentList(key)
 
         // 댓글 작성 버튼 클릭 이벤터 처리
@@ -66,14 +62,12 @@ class PostingActivity : AppCompatActivity() {
             val postingDAO = PostingDAO()
             val comment = binding.edtComment.text.toString()
             // 댓글 등록 key값 저장
-            val postingKey = postingDAO.databaseReference!!.child(comment)!!.push().key
-            // commentItemData 클래스 형식에 맞게 저장
+            val postingKey = postingDAO.databaseReference!!.child(comment).push().key
             val commentData = CommentItemData(
                 postingKey.toString(),
                 dataList.get(0).communityNickname!!,
                 comment, currentUser
             )
-            // RealTimeDatabase에 댓글 저장
             postingDAO.databaseReference!!.child(key).child("comment").child("$postingKey")
                 .setValue(commentData).addOnSuccessListener { // 성공시
                     binding.edtComment.text.clear()
@@ -96,8 +90,7 @@ class PostingActivity : AppCompatActivity() {
                     } catch (e: java.lang.Exception) {
                         dialog.dismiss()
                     }
-                }.setNegativeButton("취소") {         // 다이얼로그 닫기
-                        dialog, id ->
+                }.setNegativeButton("취소") { dialog, id ->
                     dialog.dismiss()
                 }
             builder.show()
@@ -116,7 +109,6 @@ class PostingActivity : AppCompatActivity() {
             }
         }
 
-        // 리사이클러뷰에 댓글 어댑터 연결
         adapter = CommentAdapter(commentList, key)
         binding.recyclerComment.adapter = adapter
         binding.recyclerComment.layoutManager = LinearLayoutManager(this)
@@ -124,7 +116,7 @@ class PostingActivity : AppCompatActivity() {
 
     // 게시물 정보 얻는 함수
     // 현재 user uid와 작성자 uid와 비교
-    fun getBoard(key: String) {
+    private fun getBoard(key: String) {
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val data = snapshot.getValue(AnonyPostingData::class.java)
@@ -167,7 +159,7 @@ class PostingActivity : AppCompatActivity() {
                 Log.e("ListActivity", "파이어베이스에서 데이터 로딩 실패 ${error.toString()}")
                 Toast.makeText(
                     applicationContext,
-                    "파이어베이스에서 데이터 로딩 실패 ${error.toString()}",
+                    "댓글이 저장에 실패하였습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
             }

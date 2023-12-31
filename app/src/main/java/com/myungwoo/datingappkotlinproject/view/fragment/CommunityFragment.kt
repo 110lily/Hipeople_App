@@ -31,7 +31,6 @@ class CommunityFragment : Fragment() {
         mainActivity = context as AppMainActivity
     }
 
-    // Fragment의 생명주기를 이용하여 계속 새로운 값을 업데이트 하기
     override fun onResume() {
         super.onResume()
         connentAdapter()
@@ -43,18 +42,15 @@ class CommunityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCommunityBinding.inflate(inflater)
-        // 사진 게시판의 정보 얻기
+
         pictureDataLoading()
 
-        // FloatButton을 이용하여 새로운 글 작성하기
         binding.floatingActionButton2.setOnClickListener {
             val intent = Intent(mainActivity.applicationContext, InputActivity::class.java)
             startActivity(intent)
         }
 
-        // postingData MutableList 객체 생성
         postingData = mutableListOf()
-        // Fragment와 리사이클러 뷰 어댑터 연결
         connentAdapter()
         return binding.root
 
@@ -84,8 +80,7 @@ class CommunityFragment : Fragment() {
         })
     }
 
-    // 위에서 얻은 사진 게시판의 정보를 어댑터에 연결
-    fun connentAdapter() {
+    private fun connentAdapter() {
         adapter = PictureAdapter(mainActivity, postingData)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
