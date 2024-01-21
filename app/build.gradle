@@ -9,13 +9,13 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def googleMap_Key_manifest = properties.getProperty('googleMap_Key_manifest')
 
 android {
-    namespace 'com.myungwoo.datingappkotlinproject'
+    namespace 'com.myungwoo.hipeople'
     compileSdk 34
     defaultConfig {
-        applicationId "com.myungwoo.datingappkotlinproject"
+        applicationId "com.myungwoo.hipeople"
         minSdk 24
         targetSdk 34
-        versionCode 14
+        versionCode 2
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

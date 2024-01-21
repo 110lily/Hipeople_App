@@ -24,5 +24,5 @@ dependencyResolutionManagement {
         maven { url 'https://maven.fabric.io/public' }
     }
 }
-rootProject.name = "DatingAppKotlinProject"
+rootProject.name = "hipeople"
 include ':app'

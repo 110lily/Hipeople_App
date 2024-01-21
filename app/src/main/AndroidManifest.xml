@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         android:minSdkVersion="33" />
@@ -31,7 +33,7 @@
             android:resource="@color/btnnext" />
 
         <activity
-            android:name=".view.activity.likePeople_Activity"
+            android:name=".view.activity.LikePeopleActivity"
             android:exported="false" />
 
         <service

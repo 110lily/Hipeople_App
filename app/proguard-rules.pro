@@ -21,17 +21,17 @@
 #-renamesourcefileattribute SourceFile
 
 #데이터 클래스 난독화 풀기
--keep class com.myungwoo.datingappkotlinproject.chat.**
--keep class com.myungwoo.datingappkotlinproject.chat.** { *; }
+-keep class com.myungwoo.hipeople.chat.**
+-keep class com.myungwoo.hipeople.chat.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.chat.fcm.**
--keep class com.myungwoo.datingappkotlinproject.chat.fcm.** { *; }
+-keep class com.myungwoo.hipeople.chat.fcm.**
+-keep class com.myungwoo.hipeople.chat.fcm.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.dao.**
--keep class com.myungwoo.datingappkotlinproject.dao.** { *; }
+-keep class com.myungwoo.hipeople.dao.**
+-keep class com.myungwoo.hipeople.dao.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.cardsteck.**
--keep class com.myungwoo.datingappkotlinproject.cardsteck.** { *; }
+-keep class com.myungwoo.hipeople.cardsteck.**
+-keep class com.myungwoo.hipeople.cardsteck.** { *; }
 
--keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.**
--keep class com.myungwoo.datingappkotlinproject.com.myungwoo.datingappkotlinproject.** { *; }
+-keep class com.myungwoo.hipeople.com.myungwoo.datingappkotlinproject.**
+-keep class com.myungwoo.hipeople.com.myungwoo.datingappkotlinproject.** { *; }
