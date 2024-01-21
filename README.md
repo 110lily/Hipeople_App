@@ -1,6 +1,6 @@
 # Hipeople 소개팅앱
 
- #### <img src="https://github.com/AnMyungwoo94/BeautyIdea_Shopping_App/assets/126849689/d0ba6eb9-f5c2-4839-ad30-6f8bf65c7452" alt="구글 플레이 이미지" width="20" height="20" style="float:left"> [구글플레이 스토어에서 다운로드 받기](https://play.google.com/store/apps/details?id=com.myungwoo.datingappkotlinproject)
+ #### <img src="https://github.com/AnMyungwoo94/BeautyIdea_Shopping_App/assets/126849689/d0ba6eb9-f5c2-4839-ad30-6f8bf65c7452" alt="구글 플레이 이미지" width="20" height="20" style="float:left"> [구글플레이 스토어에서 다운로드 받기](https://play.google.com/store/apps/details?id=com.myungwoo.hipeople)
 
 #### 프로젝트 소개 
 ```sh
