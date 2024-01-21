@@ -41,7 +41,7 @@ class ChatRoomActivity : AppCompatActivity() {
     private lateinit var tvTitle: TextView
     private lateinit var edtMessage: TextView
     private lateinit var firebaseDatabase: DatabaseReference
-    private lateinit var recyclerTalks: RecyclerView
+    lateinit var recyclerTalks: RecyclerView
     private lateinit var chatRoom: ChatRoomData
     private lateinit var opponentChatUser: UserInfoData
     private lateinit var chatRoomKey: String
