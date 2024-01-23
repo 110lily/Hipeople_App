@@ -45,6 +45,9 @@
 |:-----:|:-----:|:-----:|
 |<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/559b67c3-32fe-4ca1-a730-5a0e50478dbf.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/2d3ac379-e904-49c7-bc02-5a82013ad9cf.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/d9888fb6-49c5-4953-a1ed-828eda2b06d9.gif" />|
 
+- 소개팅앱의 포인트가 되는 중요한 화면이며, 사용자들이 직관적이면서도 재미있게 이성을 선택할 수 있게 만들었습니다.
+- 글램, 위피, 틴더 등 시중에 나와있는 다양한 소개팅앱을 사용해보며 고민하였습니다.
+- **CardStackView 외부 라이브러리 사용한 이유**는 RecyclerView와 CardView의 조합으로도 충분히 구현이 가능했지만 외부 라이브러리의 사용 경험을 늘려보고 싶었습니다.
 
 ### 채팅
 
@@ -52,11 +55,17 @@
 |:-----:|:-----:|:-----:|
 |<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/28710ea2-e080-471b-bdba-61847d96727f.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/b44fe779-819d-4386-8882-2875cf8eeceb.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/894e2828-d499-48cb-9736-b86fc05762b9.gif" />|
 
+- 알림 Firebase cloud messaging의 Token값 사용
+- **Firebase cloud messaging를 사용한 이유**는 OneSignal과 같은 다른 알림 서비스를 고려해보았지만, 현재 사용 중인 데이터베이스 서비스가 파이어베이스인 점, 동일한 플랫폼 내에서 알림 기능을 통합하여 사용할 수 있는 편의성, 그리고 로그인 시 즉시 사용 가능한 토큰 값을 얻을 수 있는 점을 고려하여, 파이어베이스를 알림 서비스로 선택하게 되었습니다.
+- 개인마다 고유한 토큰 값을 가져오는 과정에서 **모든 사용자의 토큰 값이 항상 동일한 문제가 발생**했습니다. 이 문제는 동일한 에뮬레이터에서 여러 회원가입을 수행하여 발생했으며, 토큰 값은 기기별로 고유하게 제공되는 것을 인지하고 이 문제를 해결했습니다.
+  
 ### 구글맵
 
 |현재 내 위치|카페, 맛집 찾기|
 |:-----:|:-----:|
 |<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/ebb6fafd-832d-4387-8533-469c80e22c78.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Hipeople_App/assets/126849689/e2427f1c-8367-4b25-ba66-cc3ecfd39393.gif">|
+
+- **구글지도를 사용한 이유**는 국내에서는 네이버지도, 카카오맵, 티맵과 같은 지도 서비스가 매우 유용하지만, 원래의 기획 의도가 국내뿐만 아니라 해외에서도 사용 가능한 앱을 개발하는 것이었기 때문에, 국내와 해외 모두에서 널리 사용될 수 있는 구글 지도를 선택했습니다.
 
 ### 익명 커뮤니티
 
