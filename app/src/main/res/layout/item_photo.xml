@@ -30,10 +30,10 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_weight="0.3"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/cardicon01"
-                android:layout_weight="0.3"/>
+                android:src="@drawable/cardicon01" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,24 +47,24 @@
                     android:layout_marginTop="10dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/woman2" />
+                    tools:src="@drawable/woman2" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:layout_weight="0.4"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="bottom"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -76,8 +76,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
-                            android:text="Name"
                             android:fontFamily="@font/cafe24oneprettynight"
+                            android:text="Name"
                             android:textColor="@color/black"
                             android:textSize="25sp"
                             android:textStyle="bold" />
@@ -122,8 +122,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="150dp"
-                            android:text="Adress"
                             android:fontFamily="@font/cafe24oneprettynight"
+                            android:text="Adress"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
