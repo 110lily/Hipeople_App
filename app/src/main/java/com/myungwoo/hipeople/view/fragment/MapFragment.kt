@@ -109,7 +109,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
             if (currentPosition != null) {
                 lifecycleScope.launch(Dispatchers.Default) {
                     withContext(Dispatchers.Main) {
-                        // UI 업데이트는 메인 스레드에서 수행
                         showRestInformation(currentPosition!!, searchLATLNG)
                     }
                 }

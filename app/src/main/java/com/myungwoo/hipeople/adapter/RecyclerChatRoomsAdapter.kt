@@ -56,8 +56,8 @@ class RecyclerChatRoomsAdapter(val context: Context) :
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userIdList = chatRooms[position].users!!.keys
-        val opponent2 = userIdList.last { !it.equals(myUid) }
-        val pictureRef = Firebase.storage.reference.child("${opponent2}.png")
+        val opponent = userIdList.last { !it.equals(myUid) }
+        val pictureRef = Firebase.storage.reference.child("${opponent}.png")
         pictureRef.downloadUrl.addOnCompleteListener {
             if (it.isSuccessful) {
                 Glide.with(context).load(it.result).into(holder.ivProfile)
@@ -67,7 +67,7 @@ class RecyclerChatRoomsAdapter(val context: Context) :
             val chatUserList: MutableList<UserInfoData> = mutableListOf()
             FirebaseDatabase.getInstance().getReference("User").child("users")
                 .orderByChild("uid")
-                .equalTo(opponent2)
+                .equalTo(opponent)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {}
                     override fun onDataChange(snapshot: DataSnapshot) {
