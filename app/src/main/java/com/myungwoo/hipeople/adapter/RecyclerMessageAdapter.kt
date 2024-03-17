@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.view.activity.ChatRoomActivity
+import com.myungwoo.hipeople.data.MessageData
 import com.myungwoo.hipeople.databinding.ListTalkItemMineBinding
 import com.myungwoo.hipeople.databinding.ListTalkItemOthersBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
-import com.myungwoo.hipeople.data.MessageData
+import com.myungwoo.hipeople.view.activity.ChatActivity
 
-class RecyclerMessagesAdapter(
+class RecyclerMessageAdapter(
     val context: Context,
     var chatRoomKey: String?,
 ) :
@@ -23,7 +27,7 @@ class RecyclerMessagesAdapter(
     var messages: ArrayList<MessageData> = arrayListOf()
     var messageKeys: ArrayList<String> = arrayListOf()
     private val myUid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    val recyclerView = (context as ChatRoomActivity).recyclerTalks
+    val recyclerView = (context as ChatActivity).recyclerTalks
 
     init {
         getMessages()

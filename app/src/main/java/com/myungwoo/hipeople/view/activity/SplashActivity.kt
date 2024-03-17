@@ -1,13 +1,13 @@
 package com.myungwoo.hipeople.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.myungwoo.hipeople.databinding.ActivitySplashActivtyBinding
 
-class SplashActivty : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashActivtyBinding
 

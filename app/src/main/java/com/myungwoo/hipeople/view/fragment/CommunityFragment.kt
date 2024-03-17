@@ -4,27 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.myungwoo.hipeople.view.activity.AppMainActivity
-import com.myungwoo.hipeople.databinding.FragmentCommunityBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.myungwoo.hipeople.data.AnonymousPostingData
-import com.myungwoo.hipeople.view.activity.InputActivity
-import com.myungwoo.hipeople.adapter.PictureAdapter
+import com.myungwoo.hipeople.adapter.CommunityListAdapter
 import com.myungwoo.hipeople.dao.PostingDAO
+import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.myungwoo.hipeople.databinding.FragmentCommunityBinding
+import com.myungwoo.hipeople.view.activity.AppMainActivity
+import com.myungwoo.hipeople.view.activity.InputActivity
 
 class CommunityFragment : Fragment() {
 
     private lateinit var mainActivity: AppMainActivity
     private lateinit var binding: FragmentCommunityBinding
     private lateinit var postingData: MutableList<AnonymousPostingData>
-    private lateinit var adapter: PictureAdapter
+    private lateinit var adapter: CommunityListAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -79,7 +79,7 @@ class CommunityFragment : Fragment() {
     }
 
     private fun connectAdapter() {
-        adapter = PictureAdapter(mainActivity, postingData)
+        adapter = CommunityListAdapter(mainActivity, postingData)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
     }

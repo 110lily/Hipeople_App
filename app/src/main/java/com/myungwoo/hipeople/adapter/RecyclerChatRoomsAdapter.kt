@@ -11,9 +11,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.databinding.ListChatroomItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,12 +19,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.myungwoo.hipeople.R
 import com.myungwoo.hipeople.data.ChatRoomData
-import com.myungwoo.hipeople.view.activity.ChatRoomActivity
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ListChatroomItemBinding
+import com.myungwoo.hipeople.view.activity.ChatActivity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.TimeZone
 
 class RecyclerChatRoomsAdapter(val context: Context) :
     RecyclerView.Adapter<RecyclerChatRoomsAdapter.ViewHolder>() {
@@ -88,7 +87,7 @@ class RecyclerChatRoomsAdapter(val context: Context) :
         holder.background.setOnClickListener()
         {
             try {
-                val intent = Intent(context, ChatRoomActivity::class.java)
+                val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("ChatRoom", chatRooms.get(position))
                 intent.putExtra("Opponent", holder.opponentChatUser)
                 intent.putExtra("ChatRoomKey", chatRoomKeys[position])

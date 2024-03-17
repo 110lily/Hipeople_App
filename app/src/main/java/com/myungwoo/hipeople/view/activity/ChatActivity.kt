@@ -1,7 +1,6 @@
 package com.myungwoo.hipeople.view.activity
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,22 +9,27 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.myungwoo.hipeople.adapter.RecyclerMessageAdapter
+import com.myungwoo.hipeople.data.ChatRoomData
+import com.myungwoo.hipeople.data.MessageData
 import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityChatBinding
 import com.myungwoo.hipeople.fcm.NotiModel
 import com.myungwoo.hipeople.fcm.PushNotification
 import com.myungwoo.hipeople.fcm.RetrofitInstance
-import com.myungwoo.hipeople.databinding.ActivityChatRoomBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import com.myungwoo.hipeople.data.ChatRoomData
-import com.myungwoo.hipeople.data.MessageData
-import com.myungwoo.hipeople.adapter.RecyclerMessagesAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,9 +37,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.TimeZone
 
-class ChatRoomActivity : AppCompatActivity() {
+class ChatActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityChatRoomBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityChatBinding.inflate(layoutInflater) }
     private lateinit var btnExit: ImageButton
     private lateinit var btnSubmit: Button
     private lateinit var tvTitle: TextView
@@ -102,7 +106,6 @@ class ChatRoomActivity : AppCompatActivity() {
             Log.e("putMessage", opponentChatUser.token.toString())
             testPush(pushModel)
         }
-
     }
 
     private fun setupChatRooms() {
@@ -165,7 +168,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     private fun setupRecycler() {
         recyclerTalks.layoutManager = LinearLayoutManager(this)
-        recyclerTalks.adapter = RecyclerMessagesAdapter(this, chatRoomKey)
+        recyclerTalks.adapter = RecyclerMessageAdapter(this, chatRoomKey)
     }
 
     override fun onBackPressed() {

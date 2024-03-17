@@ -9,12 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.myungwoo.hipeople.*
-import com.myungwoo.hipeople.view.fragment.ChatFragment
-import com.myungwoo.hipeople.view.fragment.CommunityFragment
-import com.myungwoo.hipeople.databinding.ActivityAppMainBinding
-import com.myungwoo.hipeople.databinding.UsertabButtonBinding
-import com.myungwoo.hipeople.view.fragment.CardsteckFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -22,8 +16,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.myungwoo.hipeople.R
 import com.myungwoo.hipeople.adapter.CustomAdapter
 import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityAppMainBinding
+import com.myungwoo.hipeople.databinding.UsertabButtonBinding
+import com.myungwoo.hipeople.view.fragment.CardStackFragment
+import com.myungwoo.hipeople.view.fragment.ChatRoomFragment
+import com.myungwoo.hipeople.view.fragment.CommunityFragment
 import com.myungwoo.hipeople.view.fragment.MapFragment
 
 class AppMainActivity : AppCompatActivity() {
@@ -57,8 +57,8 @@ class AppMainActivity : AppCompatActivity() {
 
         tabTitleList = mutableListOf("이성", "채팅", "맛집", "커뮤니티")
         customAdapter = CustomAdapter(this)
-        customAdapter.addListFragment(CardsteckFragment())
-        customAdapter.addListFragment(ChatFragment())
+        customAdapter.addListFragment(CardStackFragment())
+        customAdapter.addListFragment(ChatRoomFragment())
         customAdapter.addListFragment(MapFragment())
         customAdapter.addListFragment(CommunityFragment())
         binding.viewPager2.adapter = customAdapter

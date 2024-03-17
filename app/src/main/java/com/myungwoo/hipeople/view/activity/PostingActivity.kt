@@ -1,25 +1,25 @@
 package com.myungwoo.hipeople.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.databinding.ActivityPostingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.myungwoo.hipeople.data.AnonymousPostingData
 import com.myungwoo.hipeople.adapter.CommentAdapter
-import com.myungwoo.hipeople.data.CommentItemData
 import com.myungwoo.hipeople.dao.PostingDAO
 import com.myungwoo.hipeople.dao.UserDAO
+import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.myungwoo.hipeople.data.CommentItemData
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityPostingBinding
 
 class PostingActivity : AppCompatActivity() {
 

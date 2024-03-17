@@ -2,15 +2,10 @@ package com.myungwoo.hipeople.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.data.ChatRoomData
-import com.myungwoo.hipeople.view.activity.ChatRoomActivity
-import com.myungwoo.hipeople.databinding.LikepeopleItemBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,6 +13,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.myungwoo.hipeople.data.ChatRoomData
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.LikepeopleItemBinding
+import com.myungwoo.hipeople.view.activity.ChatActivity
 
 class LikePeopleAdapter(val context: Context, private val items: MutableList<UserInfoData>) :
     RecyclerView.Adapter<LikePeopleAdapter.ViewHolder>() {
@@ -84,7 +83,7 @@ class LikePeopleAdapter(val context: Context, private val items: MutableList<Use
         opponentUid: UserInfoData,
         chatRoomKey: String
     ) {
-        var intent = Intent(context, ChatRoomActivity::class.java)
+        var intent = Intent(context, ChatActivity::class.java)
         intent.putExtra("ChatRoom", chatRoom)
         intent.putExtra("Opponent", opponentUid)
         intent.putExtra("ChatRoomKey", "")

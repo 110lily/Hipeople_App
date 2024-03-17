@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.myungwoo.hipeople.databinding.CommentItemBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.myungwoo.hipeople.data.CommentItemData
+import com.myungwoo.hipeople.databinding.CommentItemBinding
 
 class CommentAdapter(val data: MutableList<CommentItemData>, val key: String) :
     RecyclerView.Adapter<CommentAdapter.CustomViewHolder>() {

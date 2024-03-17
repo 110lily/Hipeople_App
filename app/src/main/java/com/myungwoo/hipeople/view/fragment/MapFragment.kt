@@ -16,7 +16,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.common.api.Status
@@ -39,8 +39,8 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
 import com.myungwoo.hipeople.BuildConfig
-import com.myungwoo.hipeople.adapter.CustomAdapter
 import com.myungwoo.hipeople.R
+import com.myungwoo.hipeople.adapter.CustomAdapter
 import com.myungwoo.hipeople.databinding.FragmentMapBinding
 import com.myungwoo.hipeople.view.activity.AppMainActivity
 import kotlinx.coroutines.Dispatchers

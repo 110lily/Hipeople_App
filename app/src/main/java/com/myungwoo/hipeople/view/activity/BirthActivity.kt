@@ -2,10 +2,10 @@ package com.myungwoo.hipeople.view.activity
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.myungwoo.hipeople.databinding.ActivityBirthBinding
 import java.time.LocalDateTime
 

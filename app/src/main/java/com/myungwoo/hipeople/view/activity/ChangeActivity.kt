@@ -1,12 +1,12 @@
 package com.myungwoo.hipeople.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.databinding.ActivityChangeBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityChangeBinding
 
 class ChangeActivity : AppCompatActivity() {
 

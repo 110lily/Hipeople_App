@@ -3,29 +3,29 @@ package com.myungwoo.hipeople.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.myungwoo.hipeople.view.activity.AppMainActivity
-import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.databinding.FragmentOneBinding
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.myungwoo.hipeople.R
 import com.myungwoo.hipeople.adapter.CardStackAdapter
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.FragmentCardStackBinding
 import com.myungwoo.hipeople.firebase.FBRef
+import com.myungwoo.hipeople.view.activity.AppMainActivity
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.Direction
 
-class CardsteckFragment : Fragment() {
+class CardStackFragment : Fragment() {
 
-    private lateinit var binding: FragmentOneBinding
+    private lateinit var binding: FragmentCardStackBinding
     private lateinit var mainActivity: AppMainActivity
     private lateinit var cardStackAdapter: CardStackAdapter
     private lateinit var datalist: MutableList<UserInfoData>
@@ -41,7 +41,7 @@ class CardsteckFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_one, container, false)
+        return inflater.inflate(R.layout.fragment_card_stack, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

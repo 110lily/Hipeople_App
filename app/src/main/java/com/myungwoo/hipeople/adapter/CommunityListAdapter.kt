@@ -9,25 +9,24 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.databinding.PictureLayoutBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.myungwoo.hipeople.R
 import com.myungwoo.hipeople.dao.PostingDAO
+import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.myungwoo.hipeople.databinding.PictureLayoutBinding
 import com.myungwoo.hipeople.view.activity.PostingActivity
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.TimeZone
 
-class PictureAdapter(val context: Context, val pictureList: MutableList<AnonymousPostingData>) :
-    RecyclerView.Adapter<PictureAdapter.CustomViewHolder>() {
+class CommunityListAdapter(val context: Context, val pictureList: MutableList<AnonymousPostingData>) :
+    RecyclerView.Adapter<CommunityListAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val binding = PictureLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)

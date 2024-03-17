@@ -4,28 +4,28 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import com.myungwoo.hipeople.databinding.ActivityInputBinding
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import java.util.*
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.data.UserInfoData
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.google.firebase.ktx.Firebase
 import com.myungwoo.hipeople.dao.PostingDAO
+import com.myungwoo.hipeople.data.AnonymousPostingData
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityInputBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.TimeZone
 
 class InputActivity : AppCompatActivity() {
 

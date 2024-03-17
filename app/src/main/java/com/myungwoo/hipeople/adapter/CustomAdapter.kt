@@ -3,9 +3,9 @@ package com.myungwoo.hipeople.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.myungwoo.hipeople.view.fragment.ChatFragment
+import com.myungwoo.hipeople.view.fragment.CardStackFragment
+import com.myungwoo.hipeople.view.fragment.ChatRoomFragment
 import com.myungwoo.hipeople.view.fragment.CommunityFragment
-import com.myungwoo.hipeople.view.fragment.CardsteckFragment
 import com.myungwoo.hipeople.view.fragment.MapFragment
 
 class CustomAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
@@ -16,8 +16,8 @@ class CustomAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity)
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> CardsteckFragment()
-            1 -> ChatFragment()
+            0 -> CardStackFragment()
+            1 -> ChatRoomFragment()
             2 -> MapFragment()
             3 -> CommunityFragment()
             else -> throw IllegalArgumentException("Invalid position")

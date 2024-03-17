@@ -3,22 +3,24 @@ package com.myungwoo.hipeople.adapter
 import android.content.Context
 import android.content.Intent
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.data.ChatRoomData
-import com.myungwoo.hipeople.view.activity.ChatRoomActivity
-import com.myungwoo.hipeople.databinding.ItemPhotoBinding
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.myungwoo.hipeople.R
+import com.myungwoo.hipeople.data.ChatRoomData
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ItemPhotoBinding
+import com.myungwoo.hipeople.view.activity.ChatActivity
 
 class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData>) :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
@@ -114,7 +116,7 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
         opponentUid: UserInfoData,
         chatRoomKey: String
     ) {
-        var intent = Intent(context, ChatRoomActivity::class.java)
+        var intent = Intent(context, ChatActivity::class.java)
         intent.putExtra("ChatRoom", chatRoom)
         intent.putExtra("Opponent", opponentUid)
         intent.putExtra("ChatRoomKey", "")

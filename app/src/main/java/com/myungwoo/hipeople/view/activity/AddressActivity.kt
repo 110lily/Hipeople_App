@@ -1,8 +1,8 @@
 package com.myungwoo.hipeople.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.myungwoo.hipeople.R
 import com.myungwoo.hipeople.databinding.ActivityAddressBinding
 

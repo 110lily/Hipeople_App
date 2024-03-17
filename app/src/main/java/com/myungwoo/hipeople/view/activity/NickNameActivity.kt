@@ -6,17 +6,13 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.myungwoo.hipeople.firebase.FBAuth
-import com.myungwoo.hipeople.firebase.FBRef
-import com.myungwoo.hipeople.data.UserInfoData
-import com.myungwoo.hipeople.databinding.ActivityNickNameBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,7 +22,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
-
+import com.myungwoo.hipeople.data.UserInfoData
+import com.myungwoo.hipeople.databinding.ActivityNickNameBinding
+import com.myungwoo.hipeople.firebase.FBAuth
+import com.myungwoo.hipeople.firebase.FBRef
 import java.io.ByteArrayOutputStream
 
 class NickNameActivity : AppCompatActivity() {

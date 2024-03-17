@@ -92,7 +92,7 @@
             android:name=".view.activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.ChatRoomActivity"
+            android:name=".view.activity.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.PostingActivity"

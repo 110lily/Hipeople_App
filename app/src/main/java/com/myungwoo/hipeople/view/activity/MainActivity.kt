@@ -3,19 +3,19 @@ package com.myungwoo.hipeople.view.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import com.myungwoo.hipeople.R
-import com.myungwoo.hipeople.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.myungwoo.hipeople.R
+import com.myungwoo.hipeople.databinding.ActivityMainBinding
 import com.myungwoo.hipeople.showSnackBar
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {

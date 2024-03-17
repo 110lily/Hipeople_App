@@ -2,20 +2,20 @@ package com.myungwoo.hipeople.view.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.hipeople.adapter.RecyclerChatRoomsAdapter
-import com.myungwoo.hipeople.databinding.FragmentChatBinding
+import com.myungwoo.hipeople.databinding.FragmentChatRoomBinding
 import com.myungwoo.hipeople.view.activity.AppMainActivity
 
-class ChatFragment : Fragment() {
+class ChatRoomFragment : Fragment() {
 
-    private lateinit var binding: FragmentChatBinding
+    private lateinit var binding: FragmentChatRoomBinding
     private lateinit var appMainActivity: AppMainActivity
     private lateinit var recylcerChatroom: RecyclerView
     private lateinit var adapter: RecyclerChatRoomsAdapter
@@ -35,7 +35,7 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentChatBinding.inflate(inflater)
+        binding = FragmentChatRoomBinding.inflate(inflater)
         initializeView()
         setupRecycler()
         return binding.root
