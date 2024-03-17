@@ -7,10 +7,11 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.myungwoo.hipeople.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.myungwoo.hipeople.R
 
+// FCM을 통해 메시지를 받고 처리하는 서비스
 class FirebaseService : FirebaseMessagingService() {
     private val Tag = "FirebaseService"
     override fun onNewToken(token: String) {

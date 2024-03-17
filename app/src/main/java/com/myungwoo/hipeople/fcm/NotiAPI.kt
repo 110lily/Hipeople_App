@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
+// FCM에 푸시 알림을 보내기 위한 Retrofit 인터페이스
 interface NotiAPI {
     @Headers("Authorization: key=$SERVER_KEY", "Content-Type:$CONTENT_TYPE")
     @POST("fcm/send")
