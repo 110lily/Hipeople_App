@@ -60,11 +60,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private var currentMarker: Marker? = null
     private var needRequest = false
     private var previousMarker: MutableList<Marker>? = null
-    private var currentflag = 0
-    private var searchflag = 0
+    private var currentFlag = 0
+    private var searchFlag = 0
     private var circle: Circle? = null
     private var circle1KM: CircleOptions? = null
-    private var mCurrentLocatiion: Location? = null
+    private var mCurrentLocation: Location? = null
     private var currentPosition: LatLng? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var locationRequest: LocationRequest? = null
@@ -113,7 +113,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                     }
                 }
             } else {
-                Toast.makeText(context, "위치 정보가 없습니다. 위치정보에서 Hipeople앱을 허용해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "위치 정보가 없습니다. 위치정보에서 Hipeople앱을 허용해주세요", Toast.LENGTH_SHORT)
+                    .show()
                 checkPermissions()
             }
         }
@@ -127,7 +128,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                     }
                 }
             } else {
-                Toast.makeText(context, "위치 정보가 없습니다. 위치정보에서 Hipeople앱을 허용해주세요 ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "위치 정보가 없습니다. 위치정보에서 Hipeople앱을 허용해주세요 ",
+                    Toast.LENGTH_SHORT
+                ).show()
                 checkPermissions()
             }
         }
@@ -135,7 +140,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     private fun isLocationPermissionRequired(): Boolean {
         val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager2)
-        val currentFragment = (viewPager.adapter as? CustomAdapter)?.createFragment(viewPager.currentItem)
+        val currentFragment =
+            (viewPager.adapter as? CustomAdapter)?.createFragment(viewPager.currentItem)
         return currentFragment is MapFragment
     }
 
@@ -212,7 +218,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 mMap?.clear()
                 mMap?.addMarker(markerOptions)
                 mMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                searchflag = 2
+                searchFlag = 2
             }
 
             override fun onError(status: Status) {
@@ -256,10 +262,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 val markerSnippet =
                     "위도:" + location!!.latitude.toString() + " 경도:" + location!!.longitude.toString()
                 Log.d(TAG, "onLocationResult : $markerSnippet")
-                searchflag = 1
+                searchFlag = 1
 
                 setCurrentLocation(location, markerTitle, markerSnippet)
-                mCurrentLocatiion = location
+                mCurrentLocation = location
             }
         }
     }
@@ -347,7 +353,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
     }
 
-    private fun setCurrentLocation(location: Location?, markerTitle: String?, markerSnippet: String?) {
+    private fun setCurrentLocation(
+        location: Location?,
+        markerTitle: String?,
+        markerSnippet: String?
+    ) {
         if (currentMarker != null) currentMarker!!.remove()
         val currentLatLng = LatLng(location!!.latitude, location.longitude)
         val markerOptions = MarkerOptions()
@@ -481,11 +491,12 @@ class MapFragment : Fragment(), OnMapReadyCallback,
             binding.progressBar.visibility = View.GONE
             var descripter: BitmapDescriptor? = null
 
-            if (currentflag == 1) {
-                var bitmapDrawable: BitmapDrawable = context?.getDrawable(R.drawable.restaurant) as BitmapDrawable
+            if (currentFlag == 1) {
+                var bitmapDrawable: BitmapDrawable =
+                    context?.getDrawable(R.drawable.restaurant) as BitmapDrawable
                 val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
                 descripter = BitmapDescriptorFactory.fromBitmap(scaleBitmap)
-            } else if (currentflag == 2) {
+            } else if (currentFlag == 2) {
                 var bitmapDrawable: BitmapDrawable =
                     context?.getDrawable(R.drawable.cafe) as BitmapDrawable
                 val scaleBitmap = Bitmap.createScaledBitmap(bitmapDrawable.bitmap, 60, 60, false)
@@ -517,10 +528,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     override fun onPlacesFinished() {}
 
     private fun showRestInformation(location: LatLng, location2: LatLng) {
-        currentflag = 1
+        currentFlag = 1
         binding.progressBar.visibility = View.VISIBLE
 
-        if (searchflag == 1) {
+        if (searchFlag == 1) {
             mMap!!.clear() //지도 클리어
             if (previousMarker != null)
                 previousMarker?.clear()//지역정보 마커 클리어
@@ -545,7 +556,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 circle = mMap!!.addCircle(circle1KM!!)
             }
         }
-        if (searchflag == 2) {
+        if (searchFlag == 2) {
             mMap!!.clear() //지도 클리어
             if (previousMarker != null)
                 previousMarker?.clear()//지역정보 마커 클리어
@@ -574,10 +585,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun showCafeInformation(location: LatLng, location2: LatLng) {
-        currentflag = 2
+        currentFlag = 2
         binding.progressBar.visibility = View.VISIBLE
 
-        if (searchflag == 1) {
+        if (searchFlag == 1) {
             mMap!!.clear() //지도 클리어
             if (previousMarker != null)
                 previousMarker?.clear()//지역정보 마커 클리어
@@ -602,7 +613,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 circle = mMap!!.addCircle(circle1KM!!)
             }
         }
-        if (searchflag == 2) {
+        if (searchFlag == 2) {
             mMap!!.clear() //지도 클리어
             if (previousMarker != null)
                 previousMarker?.clear()//지역정보 마커 클리어

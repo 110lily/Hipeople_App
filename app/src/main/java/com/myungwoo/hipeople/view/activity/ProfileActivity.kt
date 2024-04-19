@@ -1,6 +1,5 @@
 package com.myungwoo.hipeople.view.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -24,7 +23,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var spf: SharedPreferences
     private var currentUserUid = Firebase.auth.currentUser!!.uid
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -36,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
         val pictureRef = postingDAO.storage!!.reference.child("${currentUserUid}.png")
         pictureRef.downloadUrl.addOnCompleteListener {
             if (it.isSuccessful) {
-                Log.e("pictureAdapter", "Success")
                 Glide.with(applicationContext).load(it.result).into(binding.circleImageView)
             }
         }
