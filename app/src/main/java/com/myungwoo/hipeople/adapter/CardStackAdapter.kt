@@ -3,6 +3,7 @@ package com.myungwoo.hipeople.adapter
 import android.content.Context
 import android.content.Intent
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -22,10 +23,9 @@ import com.myungwoo.hipeople.data.UserInfoData
 import com.myungwoo.hipeople.databinding.ItemPhotoBinding
 import com.myungwoo.hipeople.view.activity.ChatActivity
 
-class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData>) :
+class CardStackAdapter(val context: Context, private val items: MutableList<UserInfoData>) :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val binding = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -33,6 +33,10 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val binding = holder.binding
         val itemsData = items[position]
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        val isLiked = pref.getBoolean("isLiked_${itemsData.uid}", false)
+        updateLikeButtonState(binding.btnLike, isLiked)
 
         binding.itemName.text = itemsData.nickName
         binding.itemAdress.text = itemsData.address
@@ -43,11 +47,8 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
             }
         }
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(context)
-        val isLiked = pref.getBoolean("isLiked_${itemsData.uid}", false)
-        updateLikeButtonState(binding.btnLike, isLiked)
-
         binding.btnLike.setOnClickListener {
+            val isLiked = pref.getBoolean("isLiked_${itemsData.uid}", false)
             val database = Firebase.database.reference.child("likePeople")
             val currentUserUid = Firebase.auth.currentUser!!.uid
             val newValue: Boolean = !isLiked
@@ -68,6 +69,7 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
                     }
             }
         }
+
         binding.btnChat.setOnClickListener {
             addChatRoom(position)
         }
@@ -124,6 +126,7 @@ class CardStackAdapter(val context: Context, val items: MutableList<UserInfoData
     }
 
     private fun updateLikeButtonState(button: ImageView, isLiked: Boolean) {
+        Log.d("LikeButton", "isLiked before: $isLiked")
         button.setImageResource(if (isLiked) R.drawable.favorite_pink else R.drawable.baseline_favorite_24)
     }
 }
