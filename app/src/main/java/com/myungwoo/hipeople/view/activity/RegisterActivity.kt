@@ -91,7 +91,8 @@ class RegisterActivity : AppCompatActivity() {
                         flag = false
                         binding.groupRegister.visibility = View.INVISIBLE
                         binding.tvRegisterIdConfirm.visibility = View.VISIBLE
-                        binding.tvRegisterIdConfirm.text = getString(R.string.register_error_id_exist)
+                        binding.tvRegisterIdConfirm.text =
+                            getString(R.string.register_error_id_exist)
                         binding.tvRegisterIdConfirm.setTextColor(Color.RED)
                     } else {
                         binding.tvRegisterIdConfirm.visibility = View.INVISIBLE
@@ -106,12 +107,20 @@ class RegisterActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (s!!.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,15}$".toRegex())) {
-                    passwordFlag = true
-                    binding.tvRegisterPasswordConfirm.setTextColor(Color.BLUE)
-                    binding.tvRegisterPasswordConfirm.text = getString(R.string.register_success_password)
+                if (s.isNullOrEmpty()) {
+                    binding.tvRegisterPasswordConfirm.setTextColor(Color.GRAY)
+                    binding.tvRegisterPasswordConfirm.text =
+                        getString(R.string.register_password_confirm)
+                    passwordFlag = false
                 } else {
-                    binding.tvRegisterPasswordConfirm.setTextColor(Color.RED)
+                    if (s!!.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,15}$".toRegex())) {
+                        passwordFlag = true
+                        binding.tvRegisterPasswordConfirm.setTextColor(Color.BLUE)
+                        binding.tvRegisterPasswordConfirm.text =
+                            getString(R.string.register_success_password)
+                    } else {
+                        binding.tvRegisterPasswordConfirm.setTextColor(Color.RED)
+                    }
                 }
                 pw = s.toString()
             }

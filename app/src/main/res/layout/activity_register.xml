@@ -77,7 +77,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -110,25 +109,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-
-        <TextView
-            android:id="@+id/tv_register_password_check_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_password_check_confirm"
-            android:visibility="invisible" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_register_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/btn_next"
-            android:text="@string/register_btn_next"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="invisible" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_register_password_check_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_password_check_confirm"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register_password_check" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_next"
+        android:text="@string/register_btn_next"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register_password_check_confirm" />
 </androidx.constraintlayout.widget.ConstraintLayout>
